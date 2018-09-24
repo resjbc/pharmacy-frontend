@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-declare const App;
+
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   title = 'app';
 
   ngOnInit(): void {
-    App.initialLoadPage();
+  
   }
  
 }

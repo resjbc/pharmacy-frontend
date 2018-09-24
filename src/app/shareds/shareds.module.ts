@@ -10,7 +10,7 @@ import { BsDropdownModule } from 'ngx-bootstrap';
   imports: [
     CommonModule,
     RouterModule,
-    BsDropdownModule
+    BsDropdownModule.forRoot(),
   ],
   declarations: [
     AuthContentComponent,

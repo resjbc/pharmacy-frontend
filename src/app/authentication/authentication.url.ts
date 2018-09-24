@@ -1,3 +1,4 @@
 export const AuthURL = {
-    CreateOrder: 'create-order'
+    CreateOrder: 'create-order',
+    CreatePerson: 'create-person',
 };

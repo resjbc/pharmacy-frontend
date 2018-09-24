@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AppURL } from '../../../app.url';
+import { AuthURL } from '../../../authentication/authentication.url';
+declare const App;
 
 @Component({
   selector: 'app-auth-sidebar',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthSidebarComponent implements OnInit {
 
+  AppURL = AppURL;
+  AuthURL = AuthURL;
+
   constructor() { }
 
   ngOnInit() {
+    App.initialLoadPage();
   }
 
 }
