@@ -5,12 +5,16 @@ import { AuthContentComponent } from './components/auth-content/auth-content.com
 import { AuthNavbarComponent } from './components/auth-navbar/auth-navbar.component';
 import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.component';
 import { BsDropdownModule } from 'ngx-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    BsDropdownModule
+    FormsModule,
+    ReactiveFormsModule,
+    BsDropdownModule.forRoot()
   ],
   declarations: [
     AuthContentComponent,
