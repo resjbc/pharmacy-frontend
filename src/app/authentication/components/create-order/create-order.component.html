@@ -15,7 +15,7 @@
         <div class="tile-title-w-btn">
           <h3 class="title">ผู้ประกอบการ</h3>
           <p>
-            <button class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>
+            <button (click) = "openModal(template)" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>
               เพิ่มรายการ
             </button>
           </p>
@@ -96,7 +96,7 @@
                       <th>ลำดับ</th>
                       <th>รายการ</th>
                       <th>ประเภทของค่าธรรมเนียม</th>
-                      <th>จำนวนบาท</th>
+                      <th>จำนวน(บาท)</th>
                       <th>การจัดการ</th>
                     </tr>
                   </thead>
@@ -108,27 +108,6 @@
                       <td>El snort testosterone trophy driving gloves handsome</td>
                       <td>$41.32</td>
                     </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>City of Bones</td>
-                      <td>247-925-726</td>
-                      <td>Wes Anderson umami biodiesel</td>
-                      <td>$75.52</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>The Maze Runner</td>
-                      <td>545-457-47</td>
-                      <td>Terry Richardson helvetica tousled street art master</td>
-                      <td>$15.25</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>The Fault in Our Stars</td>
-                      <td>757-855-857</td>
-                      <td>Tousled lomo letterpress</td>
-                      <td>$03.44</td>
-                    </tr>
                   </tbody>
                 </table>
               
@@ -139,3 +118,7 @@
     </div>
   </div>
 </app-auth-content>
+
+<ng-template #template>
+    <app-add-item [modalRef] = "modalRef"></app-add-item>
+</ng-template>

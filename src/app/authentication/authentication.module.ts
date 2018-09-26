@@ -4,6 +4,7 @@ import { CreateOrderComponent } from './components/create-order/create-order.com
 import { AuthenticationRouting } from './authentication.routing';
 import { SharedsModule } from '../shareds/shareds.module';
 import { CreatePersonComponent } from './components/create-person/create-person.component';
+import { AddItemComponent } from './components/create-order/add-item/add-item.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { CreatePersonComponent } from './components/create-person/create-person.
   ],
   declarations: [
     CreateOrderComponent,
-    CreatePersonComponent
+    CreatePersonComponent,
+    AddItemComponent
   ]
 })
 export class AuthenticationModule { }

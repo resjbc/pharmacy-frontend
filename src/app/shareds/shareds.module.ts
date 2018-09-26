@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuthContentComponent } from './components/auth-content/auth-content.component';
 import { AuthNavbarComponent } from './components/auth-navbar/auth-navbar.component';
 import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.component';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -12,13 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
-<<<<<<< HEAD
     FormsModule,
     ReactiveFormsModule,
-    BsDropdownModule.forRoot()
-=======
     BsDropdownModule.forRoot(),
->>>>>>> 993ff90994d1ea59ed5c8249cdcf8a00a826b233
+    ModalModule.forRoot(),
   ],
   declarations: [
     AuthContentComponent,
@@ -29,7 +26,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AuthContentComponent,
     AuthNavbarComponent,
     AuthSidebarComponent,
-    BsDropdownModule
+    BsDropdownModule,
+    ModalModule,
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class SharedsModule { }
