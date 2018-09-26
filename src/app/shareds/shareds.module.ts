@@ -12,9 +12,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
+<<<<<<< HEAD
     FormsModule,
     ReactiveFormsModule,
     BsDropdownModule.forRoot()
+=======
+    BsDropdownModule.forRoot(),
+>>>>>>> 993ff90994d1ea59ed5c8249cdcf8a00a826b233
   ],
   declarations: [
     AuthContentComponent,
