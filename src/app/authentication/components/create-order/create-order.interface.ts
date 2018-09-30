@@ -1,6 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { TemplateRef } from "@angular/core";
 import { BsModalRef } from "ngx-bootstrap";
+import { IListItem } from "./add-item/add-item.interface";
 
 export interface ICreateOrderComponent {
     form: FormGroup;
@@ -17,4 +18,5 @@ export interface ICreateOrder {
     mobile:  string;
     placeName:  string;
     placeAddress:  string;
+    listItems: IListItem[];
 }

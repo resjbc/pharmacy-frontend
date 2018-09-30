@@ -15,7 +15,10 @@ import { AddItemComponent } from './components/create-order/add-item/add-item.co
   declarations: [
     CreateOrderComponent,
     CreatePersonComponent,
-    AddItemComponent
-  ]
+    AddItemComponent,
+  ],
+  /*providers: [
+  AddlistService
+  ]*/
 })
 export class AuthenticationModule { }

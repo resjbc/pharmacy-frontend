@@ -13,28 +13,42 @@
         <div class="form-group">
           <label for="">พรบ</label>
           <select class="form-control" formControlName="act">
-            <option value="">เลือกพรบ</option>
+            <option value="" selected>เลือกพรบ</option>
+            <option *ngFor="let act of acts" [value]="act.id_act">{{act.description}}</option>
           </select>
         </div>
         <div class="form-group">
           <label for="">ประเภทค่าธรรมเนียม</label>
           <select class="form-control" formControlName="type">
-            <option value="">เลือกประเภทค่าธรรมเนียม</option>
+            <option value="" selected>เลือกประเภทค่าธรรมเนียม</option>
+            <option *ngFor="let type of types" [value]="type.id_type">{{type.description}}</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="">รายการ</label>
-          <select class="form-control" formControlName="list">
-            <option value="">เลือกรายการ</option>
-          </select>
+        <div class="form-group example-form">
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="เลือกรายการ" aria-label="Number" matInput formControlName="list"
+              [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let list of filteredLists | async" [value]="list.description">
+                {{list.description}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12  text-center">
+          <div class="form-group">
+            <button type="" [disabled]="!form.controls.list.value" (click)="onResetList()" class="btn btn-danger">
+              ล้างรายการ
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-primary">
-      เพิ่ม
+    <button type="submit" [disabled]="!form.controls.list.value" class="btn btn-primary">
+      เพิ่มรายการ
     </button>
   </div>
 </form>

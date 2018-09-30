@@ -6,6 +6,8 @@ import { AuthNavbarComponent } from './components/auth-navbar/auth-navbar.compon
 import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.component';
 import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlertService } from './services/alert.service';
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
 
 @NgModule({
@@ -16,6 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   declarations: [
     AuthContentComponent,
@@ -30,6 +35,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ModalModule,
     ReactiveFormsModule,
     FormsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  providers: [
+    AlertService
   ]
 })
 export class SharedsModule { }

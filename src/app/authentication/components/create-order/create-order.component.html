@@ -1,41 +1,53 @@
 <app-auth-content>
   <div class="app-title">
     <div>
-      <h1><i class="fa fa-file-text"></i> ใบสั่งซื้อ</h1>
-      <p><strong>หน้าสร้างใบสั่งซื้อ</strong></p>
+      <h1><i class="fa fa-file-text"></i> ใบสั่งชำระเงิน</h1>
+      <!--<p><strong>หน้าสร้างใบสั่งชำระเงิน</strong></p>-->
     </div>
     <ul class="app-breadcrumb breadcrumb">
       <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-      <li class="breadcrumb-item"><a href="#">Blank Page</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/', AppURL.Authen, AuthURL.CreateOrder]">สร้างรายการ</a></li>
     </ul>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
       <div class="tile">
-        <div class="tile-title-w-btn">
-          <h3 class="title">ผู้ประกอบการ</h3>
-          <p>
-            <button (click) = "openModal(template)" class="btn btn-primary icon-btn"><i class="fa fa-plus"></i>
-              เพิ่มรายการ
-            </button>
-          </p>
+
+        <div class='row'>
+          <div class='col-sm-6'>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" #searchPID placeholder="ค้นหาด้วยเลขบัตรประชาชน" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary icon-btn" (click)="onSearchPid(searchPID.value)" type="button"><i class="fa fa-search"></i>ค้นหา</button>
+              </div>
+            </div>
+          </div>
+          <div class='col-sm-6'>
+            <div class='form-group'>
+              <button (click)="openModal(template)" class="btn btn-primary icon-btn " style="float: right"><i class="fa fa-plus"></i>
+                เพิ่มรายการ
+              </button>
+            </div>
+          </div>
         </div>
+
+
         <div class="tile-body">
           <hr>
-          <form action="">
+          <form [formGroup]="form" (submit)="onSubmit()">
             <div class="row">
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">ชื่อ</label>
-                      <input type="text" class="form-control">
+                      <input type="text" formControlName="firstname" class="form-control">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">นามสกุล</label>
-                      <input type="text" class="form-control">
+                      <input type="text" formControlName="lastname" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -43,13 +55,13 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">เลขบัตรประชาชน</label>
-                      <input type="text" class="form-control">
+                      <input type="text" formControlName="pid" class="form-control">
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">เบอร์โทร</label>
-                      <input type="text" class="form-control">
+                      <input type="text" formControlName="mobile" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -60,7 +72,7 @@
                   <div class="col-sm-12">
                     <div class="form-group">
                       <label for="">ที่อยู่</label>
-                      <textarea rows="5" type="text" class="form-control"></textarea>
+                      <textarea rows="5" type="text" formControlName="address" class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
@@ -75,42 +87,60 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="">ชื่อสถานที่/บริษัท</label>
-                  <input type="text" class="form-control">
+                  <input type="text" formControlName="placeName" class="form-control">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="">ที่อยู่สถานที่/บริษัท</label>
-                  <textarea rows="1" type="text" class="form-control"></textarea>
+                  <textarea rows="1" formControlName="placeAddress" type="text" class="form-control"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="listItems.length > 0">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6">
+                <div class='form-group'>
+                  <button type="submit" class="btn btn-danger icon-btn " style="float: right"><i class="fa fa-print"></i>
+                    บันทึกและพิมพ์
+                  </button>
                 </div>
               </div>
             </div>
           </form>
-          <div class="row">
-            <div class="col-12 table-responsive">
-             
-                <h3 class="tile-title">รายการ</h3>
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>ลำดับ</th>
-                      <th>รายการ</th>
-                      <th>ประเภทของค่าธรรมเนียม</th>
-                      <th>จำนวน(บาท)</th>
-                      <th>การจัดการ</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>The Hunger Games</td>
-                      <td>455-981-221</td>
-                      <td>El snort testosterone trophy driving gloves handsome</td>
-                      <td>$41.32</td>
-                    </tr>
-                  </tbody>
-                </table>
-              
+          <div class="row" *ngIf="listItems.length > 0">
+            <div class="table-responsive col-12">
+                <br/>
+              <table class="table table-striped ">
+                <thead>
+                  <tr>
+                    <th class="text-center">ลำดับ</th>
+                    <th class="text-center">รายการ</th>
+                    <th class="text-center">ประเภท</th>
+                    <th class="text-center">จำนวน(บาท)</th>
+                    <th class="text-center"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let listItem of listItems index as i">
+                    <td class="text-center">{{i+1}}</td>
+                    <td class="">{{listItem.description}}</td>
+                    <td class="text-center">{{listItem.type_description}}</td>
+                    <td class="text-center">{{listItem.price}}</td>
+                    <td class="text-center">
+                      <i (click)="onDeleteListItem(i)" class="fa fa-trash cur"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><strong>ยอดเงินที่ต้องชำระ</strong></td>
+                    <td class="text-center"><strong>{{SumtotalPrice()}}</strong></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+
             </div>
           </div>
         </div>
@@ -120,5 +150,5 @@
 </app-auth-content>
 
 <ng-template #template>
-    <app-add-item [modalRef] = "modalRef"></app-add-item>
+  <app-add-item [modalRef]="modalRef" (listitem)="resultListItem($event)"></app-add-item>
 </ng-template>
