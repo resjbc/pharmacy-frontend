@@ -16,7 +16,7 @@
         <div class='row'>
           <div class='col-sm-6'>
             <div class="input-group mb-3">
-              <input type="text" class="form-control" #searchPID placeholder="ค้นหาด้วยเลขบัตรประชาชน" aria-describedby="basic-addon2">
+              <input class="form-control" type="text" #searchPID placeholder="ค้นหาด้วยเลขบัตรประชาชน" aria-describedby="basic-addon2">
               <div class="input-group-append">
                 <button class="btn btn-primary icon-btn" (click)="onSearchPid(searchPID.value)" type="button"><i class="fa fa-search"></i>ค้นหา</button>
               </div>
@@ -100,9 +100,9 @@
             <div class="row" *ngIf="listItems.length > 0">
               <div class="col-sm-6"></div>
               <div class="col-sm-6">
-                <div class='form-group'>
-                  <button type="submit" class="btn btn-danger icon-btn " style="float: right"><i class="fa fa-print"></i>
-                    บันทึกและพิมพ์
+                <div class='form-group' *ngIf="!flagPrint">
+                  <button type="submit" class="btn btn-danger icon-btn " style="float: right"><i class="fa fa-save"></i>
+                    บันทึก
                   </button>
                 </div>
               </div>
@@ -110,7 +110,7 @@
           </form>
           <div class="row" *ngIf="listItems.length > 0">
             <div class="table-responsive col-12">
-                <br/>
+              <br />
               <table class="table table-striped ">
                 <thead>
                   <tr>
@@ -132,15 +132,17 @@
                     </td>
                   </tr>
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td class="text-right"><strong>ยอดเงินที่ต้องชำระ</strong></td>
+                    <td colspan="3" class="text-right"><strong>ยอดเงินที่ต้องชำระ</strong></td>
                     <td class="text-center"><strong>{{SumtotalPrice()}}</strong></td>
                     <td></td>
                   </tr>
                 </tbody>
               </table>
-
+              <div class="row d-print-none mt-2" *ngIf="flagPrint">
+                <div class="col-12 text-right"><a class="btn btn-danger" href="javascript:window.print();" target="_blank"><i
+                      class="fa fa-print"></i> พิมพ์</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

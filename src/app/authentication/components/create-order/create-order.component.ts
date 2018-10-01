@@ -6,6 +6,9 @@ import { IListItem } from './add-item/add-item.interface';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { AppURL } from '../../../app.url';
 import { AuthURL } from '../../authentication.url';
+import { PersonService } from '../../services/person.service';
+import { IPerson } from '../create-person/person.interface';
+import { IRoleAccount } from '../../../shareds/services/account.service';
 
 @Component({
   selector: 'app-create-order',
@@ -14,24 +17,21 @@ import { AuthURL } from '../../authentication.url';
 })
 export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder {
 
-  firstname: string;
-  lastname: string;
-  pid: string;
-  address: string;
-  mobile: string;
-  placeName: string;
-  placeAddress: string;
   listItems: IListItem[] = [];
+  i_person: IPerson = null;
 
   AppURL = AppURL;
   AuthURL = AuthURL;
+
+  flagPrint: boolean = false;
 
 
 
   constructor(
     private build: FormBuilder,
     private modalService: BsModalService,
-    private alert: AlertService
+    private alert: AlertService,
+    private person: PersonService
   ) {
     this.initialCreateFormData();
   }
@@ -40,7 +40,9 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
   modalRef: BsModalRef;
 
   onSubmit() {
+    this.flagPrint = true;
     console.log(this.form.value);
+
   }
 
   openModal(templete: TemplateRef<any>) {
@@ -87,8 +89,34 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
     return totalPrice;
   }
 
-  onSearchPid(pid){
-    console.log(pid);
+  onSearchPid(pid: string) {
+    if (!parseInt(pid) || !(pid.trim().length == 13)) {
+      this.alert.notify('ตรวจสอบหมายเลขบัตรประชาชน');
+      return;
+    }
+
+    this.person
+      .getPerson(pid)
+      .then(person => {
+        this.i_person = person;
+        this.form.setValue({
+          firstname: this.i_person.firstname,
+          lastname: this.i_person.lastname,
+          pid: this.i_person.cid,
+          address: this.i_person.address,
+          mobile: this.i_person.mobile,
+          placeName: '',
+          placeAddress: ''
+        });
+        console.log(IRoleAccount[this.i_person.role]);
+      })
+      .catch(err => {
+        this.alert.notify(err.Message);
+      });
   }
+
+  /*getRoleName(role: IRoleAccount) {
+    return IRoleAccount[role];
+  }*/
 
 }
