@@ -15,3 +15,15 @@ export interface ICreateOrder {
     listItems: IListItem[];
     i_person: IPerson;
 }
+
+
+
+export interface IReceipt  {
+    id_person: number;
+    id_member_create: number;
+    place: string;
+    place_address: string;
+    date_created:  Date;
+    date_updated: Date;
+    recieptDetails: IListItem[];
+}

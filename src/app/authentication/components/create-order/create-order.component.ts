@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
-import { ICreateOrderComponent, ICreateOrder } from './create-order.interface';
+import { ICreateOrderComponent, ICreateOrder, IReceipt } from './create-order.interface';
 import { IListItem } from './add-item/add-item.interface';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { AppURL } from '../../../app.url';
@@ -17,6 +17,8 @@ import { IRoleAccount } from '../../../shareds/services/account.service';
 })
 export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder {
 
+
+  
   listItems: IListItem[] = [];
   i_person: IPerson = null;
 
@@ -25,7 +27,8 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
 
   flagPrint: boolean = false;
 
-
+  reciept: IReceipt;
+  
 
   constructor(
     private build: FormBuilder,
@@ -41,8 +44,16 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
 
   onSubmit() {
     this.flagPrint = true;
-    console.log(this.form.value);
 
+    /*this.reciept["date_created"] = new Date();
+    this.reciept["date_updated"] = new Date();
+    this.reciept["id_member_create"] = 1;
+    this.reciept["id_person"] = this.i_person.id_person;
+    this.reciept["place"] = this.form.controls.placeName.value;
+    this.reciept["place_address"] = this.form.controls.placeAddress.value;
+    this.reciept["recieptDetails"] = this.listItems;*/
+
+    console.log(this.reciept);
   }
 
   openModal(templete: TemplateRef<any>) {
@@ -108,7 +119,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
           placeName: '',
           placeAddress: ''
         });
-        console.log(IRoleAccount[this.i_person.role]);
+        //console.log(IRoleAccount[this.i_person.role]);
       })
       .catch(err => {
         this.alert.notify(err.Message);
