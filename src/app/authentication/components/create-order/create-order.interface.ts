@@ -19,11 +19,12 @@ export interface ICreateOrder {
 
 
 export interface IReceipt  {
+    id_receipt?:number;
     id_person: number;
     id_member_create: number;
     place: string;
     place_address: string;
     date_created:  Date;
     date_updated: Date;
-    recieptDetails: IListItem[];
+    receiptDetails: IListItem[];
 }

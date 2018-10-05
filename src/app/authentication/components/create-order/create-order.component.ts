@@ -9,6 +9,7 @@ import { AuthURL } from '../../authentication.url';
 import { PersonService } from '../../services/person.service';
 import { IPerson } from '../create-person/person.interface';
 import { IRoleAccount } from '../../../shareds/services/account.service';
+import { ReceiptService } from '../../services/receipt.service';
 
 @Component({
   selector: 'app-create-order',
@@ -18,7 +19,6 @@ import { IRoleAccount } from '../../../shareds/services/account.service';
 export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder {
 
 
-  
   listItems: IListItem[] = [];
   i_person: IPerson = null;
 
@@ -27,14 +27,16 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
 
   flagPrint: boolean = false;
 
-  reciept: IReceipt;
-  
+  receipt: IReceipt = null;
+  id_receipt: any = null;
+
 
   constructor(
     private build: FormBuilder,
     private modalService: BsModalService,
     private alert: AlertService,
-    private person: PersonService
+    private personService: PersonService,
+    private receiptService: ReceiptService
   ) {
     this.initialCreateFormData();
   }
@@ -43,17 +45,41 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
   modalRef: BsModalRef;
 
   onSubmit() {
-    this.flagPrint = true;
+    if (this.form.invalid) return this.alert.someting_wrong();
+    //this.flagPrint = true; 
+    //console.log(this.id_recipt);
 
-    /*this.reciept["date_created"] = new Date();
-    this.reciept["date_updated"] = new Date();
-    this.reciept["id_member_create"] = 1;
-    this.reciept["id_person"] = this.i_person.id_person;
-    this.reciept["place"] = this.form.controls.placeName.value;
-    this.reciept["place_address"] = this.form.controls.placeAddress.value;
-    this.reciept["recieptDetails"] = this.listItems;*/
+    
 
-    console.log(this.reciept);
+    this.receipt = {
+      id_person: this.i_person.id_person,
+      date_created: !this.id_receipt ? new Date() : this.receipt.date_created,
+      date_updated: new Date(),
+      id_member_create: 1,
+      place: this.form.controls.placeName.value,
+      place_address: this.form.controls.placeAddress.value,
+      receiptDetails: this.listItems
+    }
+
+    if(this.id_receipt) this.receipt.id_receipt = this.id_receipt;
+
+    console.log(this.receipt);  
+
+    this.receiptService.createReceipt(this.receipt).then(result => {
+
+      if (result) {
+        this.receipt = result;
+        this.id_receipt = this.receipt.id_receipt;
+        this.listItems = this.receipt.receiptDetails
+        console.log(result);
+      }
+
+    }).catch(err => this.alert.notify(err.Message));
+
+
+    /*console.log({
+      
+    });*/
   }
 
   openModal(templete: TemplateRef<any>) {
@@ -106,7 +132,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
       return;
     }
 
-    this.person
+    this.personService
       .getPerson(pid)
       .then(person => {
         this.i_person = person;

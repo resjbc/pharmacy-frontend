@@ -5,13 +5,13 @@ export interface IAddItemComponent {
     modalRef: BsModalRef;
     form: FormGroup;
 
-    onSubmit():void;
+    onSubmit(): void;
 }
 
 export interface IAddItem {
     list: string;
-    act: string;   
-    type: string; 
+    act: string;
+    type: string;
 }
 
 export interface IActItem {
@@ -28,7 +28,11 @@ export interface IListItem {
     id_list: number,
     description: string,
     price: number,
-    type_description?: string
+    type: string,
+    id_receipt_detail?: number,
+    id_receipt?: number,
+    qty?: number,
+
 
 }
 

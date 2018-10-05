@@ -50,7 +50,7 @@ export class AddItemComponent implements OnInit, IAddItemComponent {
       return this.alert.notify('ไม่พบรายการนี้');
     }
     
-    list.type_description = this.types.find(type => type.id_type == this.form.controls.type.value).description;
+    list.type = this.types.find(type => type.id_type == this.form.controls.type.value).description;
     
     //console.log(list);
     this.listitem.emit(list);

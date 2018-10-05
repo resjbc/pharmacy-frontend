@@ -19,12 +19,28 @@ export class HttpService {
       .pipe(catchError(err => this.handleError(err)));
   }
 
+  //ส่งข้อมูลแบบ Post method
+  requestPost(url: string, body: any, accessToken?: string) {
+    return this.http
+      .post(`${this.address}${url}`, body, {
+        headers: this.appendHeaders(accessToken)
+      })
+      .pipe(catchError(err => this.handleError(err)));
+  }
+
   // ปรับแต่ง Error ใหม่
   private handleError(errResponse: HttpErrorResponse): Observable<any> {
     errResponse['Message'] = errResponse.message;
     if (errResponse.error && errResponse.error.message)
       errResponse['Message'] = errResponse.error.message;
     throw errResponse
+  }
+
+  //เพิ่ม Header
+  private appendHeaders(accessToken) {
+    const headers = {};
+    if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+    return new HttpHeaders(headers);
   }
 
 
