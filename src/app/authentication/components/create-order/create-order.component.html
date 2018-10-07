@@ -24,7 +24,11 @@
           </div>
           <div class='col-sm-6'>
             <div class='form-group'>
-              <button (click)="openModal(template)" class="btn btn-primary icon-btn " style="float: right"><i class="fa fa-plus"></i>
+              <button (click)="clearReceipt()" class="btn btn-info icon-btn "><i class="fa fa-file"></i>
+                สร้างรายการใหม่
+              </button>
+              <button (click)="openModal(template)" [disabled]="!i_person" class="btn btn-primary icon-btn " style="float: right"><i
+                  class="fa fa-plus"></i>
                 เพิ่มรายการ
               </button>
             </div>
@@ -41,13 +45,13 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">ชื่อ</label>
-                      <input type="text" formControlName="firstname" class="form-control">
+                      <input type="text" formControlName="firstname" class="form-control" disabled>
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">นามสกุล</label>
-                      <input type="text" formControlName="lastname" class="form-control">
+                      <input type="text" formControlName="lastname" class="form-control" disabled>
                     </div>
                   </div>
                 </div>
@@ -55,13 +59,13 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">เลขบัตรประชาชน</label>
-                      <input type="text" formControlName="pid" class="form-control">
+                      <input type="text" formControlName="pid" class="form-control" disabled>
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">เบอร์โทร</label>
-                      <input type="text" formControlName="mobile" class="form-control">
+                      <input type="text" formControlName="mobile" class="form-control" disabled>
                     </div>
                   </div>
                 </div>
@@ -72,7 +76,7 @@
                   <div class="col-sm-12">
                     <div class="form-group">
                       <label for="">ที่อยู่</label>
-                      <textarea rows="5" type="text" formControlName="address" class="form-control"></textarea>
+                      <textarea rows="5" type="text" formControlName="address" disabled class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
@@ -100,7 +104,7 @@
             <div class="row" *ngIf="listItems.length > 0">
               <div class="col-sm-6"></div>
               <div class="col-sm-6">
-                <div class='form-group' *ngIf="!flagPrint">
+                <div class='form-group'>
                   <button type="submit" class="btn btn-danger icon-btn " style="float: right"><i class="fa fa-save"></i>
                     บันทึก
                   </button>
@@ -125,7 +129,7 @@
                   <tr *ngFor="let listItem of listItems index as i">
                     <td class="text-center">{{i+1}}</td>
                     <td class="">{{listItem.description}}</td>
-                    <td class="text-center">{{listItem.type_description}}</td>
+                    <td class="text-center">{{listItem.type}}</td>
                     <td class="text-center">{{listItem.price}}</td>
                     <td class="text-center">
                       <i (click)="onDeleteListItem(i)" class="fa fa-trash cur"></i>
@@ -138,13 +142,15 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="row d-print-none mt-2" *ngIf="flagPrint">
-                <div class="col-12 text-right"><a class="btn btn-danger" href="javascript:window.print();" target="_blank"><i
-                      class="fa fa-print"></i> พิมพ์</a>
+            </div>
+          </div>
+          <div class="row" *ngIf="flagPrint && listItems.length > 0">
+              <div class="col-sm-12 text-center">
+                <div class='form-group' >
+                  <button class="btn btn-warning icon-btn" (click)="toPrint()" type="button"><i class="fa fa-print"></i>ไปยังหน้าพิมพ์</button>
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>

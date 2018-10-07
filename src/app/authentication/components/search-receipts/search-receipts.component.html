@@ -1,0 +1,228 @@
+<app-auth-content>
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-search"></i> ค้นหาใบสั่งซื้อ</h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-search fa-lg"></i></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/', AppURL.Authen, AuthURL.SearchReceipts]">ค้นหารายการ</a></li>
+    </ul>
+  </div>
+
+  <div class="row" id="section-to-print-no">
+    <div class="col-md-12">
+      <div class="tile">
+        <section class="invoice">
+          <h5 class="page-header">หมายเลขใบสั่งซื้อ</h5>
+          <div class="input-group mb-3">
+            <input class="form-control" [(ngModel)]="id_reference" type="number" min="0" step="1" onkeydown="javascript: return event.keyCode == 69 ? false : true"
+              aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary icon-btn" (click)="onSearchRecipt()" type="button"><i class="fa fa-search"></i>ค้นหา</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" id="section-to-print" *ngIf="person">
+    <div class="col-md-12">
+      <div class="tile">
+        <section class="invoice">
+          <div class="row mb-4">
+            <div class="col-3">
+              <div class="form-group">
+                <img src="assets/images/logo.png" class="img-fluid" alt="Image">
+              </div>
+            </div>
+            <div class="col-5">
+              <br />
+              <br />
+              <h2 class="text-left text-left"> สำนักงานสาธารณสุขจังหวัดปัตตานี ต.รูสะมิแล อ.เมือง จ.ปัตตานี</h2>
+            </div>
+            <div class="col-4">
+
+              <h5 class="text-right"> หมายเลขใบสั่งซื้อ {{id_reference}} </h5>
+              <h6 class="text-right"> {{date_created | date: 'dd/MM'}}/{{YearThai(date_created | date:'yyyy')}}</h6>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <hr size="30">
+              <h3 class="text-center"> ใบสั่งชำระเงิน</h3>
+              <hr size="30">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 table-responsive">
+              <table class="table ">
+                <tbody>
+                  <tr>
+                    <td>
+                      <h6>ชื่อผู้ประกอบการ</h6>
+                    </td>
+                    <td>
+                      <h6>{{person.firstname}} {{person.lastname}}</h6>
+                    </td>
+                    <td>
+                      <h6>เลขที่บัตรประชาชน</h6>
+                    </td>
+                    <td>
+                      <h6>{{person.cid}}</h6>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h6>เบอร์โทรศัพท์</h6>
+                    </td>
+                    <td>
+                      <h6>{{person.mobile ? person.mobile : '-' }}</h6>
+                    </td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h6>ชื่อสถานที่/บริษัท</h6>
+                    </td>
+                    <td>
+                      <h6>{{(place) ? place: '-' }}</h6>
+                    </td>
+                    <td>
+                      <h6>ที่อยู่สถานที่/บริษัท</h6>
+                    </td>
+                    <td>
+                      <h6>{{(place_address) ? place_address : '-' }}</h6>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="receiptDetails.length > 0">
+            <div class="col-12 table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="text-center">ลำดับ</th>
+                    <th class="text-center">รายการ</th>
+                    <th class="text-center">ประเภท</th>
+                    <th class="text-center">จำนวน(บาท)</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let listItem of receiptDetails index as i">
+                    <td class="text-center">{{i+1}}</td>
+                    <td class="">{{listItem.description}}</td>
+                    <td class="text-center">{{listItem.type}}</td>
+                    <td class="text-center">{{listItem.price}}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" class="text-right"><strong>ยอดเงินที่ต้องชำระ</strong></td>
+                    <td class="text-center"><strong>{{SumtotalPrice()}}</strong></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" class="text-center">
+                      <br />
+                      <br />
+                      <h6>(เงิน {{BathText()}} )</h6>
+                    </td>
+                    <td class="text-center"><strong></strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <div class="d-flex">
+                <div class="ml-auto">
+                  <br />
+                  <h6>ผู้สั่งชำระเงิน.................................................................</h6>
+                  <br />
+                  <h6>(&nbsp;&nbsp;{{ member_create.firstname}} {{ member_create.lastname}}&nbsp;&nbsp;)</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <br />
+              <br />
+              <br />
+              <hr class="style1" />
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <hr size="30">
+              <h3 class="text-center">สำหรับเจ้าหน้าที่การเงิน</h3>
+              <hr size="30">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 table-responsive">
+              <table class="table ">
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>ได้รับเงินจาก</strong>&nbsp;&nbsp;&nbsp; <strong>{{person.firstname}} {{person.lastname}}</strong>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>จำนวน</strong>&nbsp;&nbsp;&nbsp;
+                      <strong>{{receiptDetails.length}}&nbsp;&nbsp; รายการ</strong>
+                      <strong>เป็นเงิน &nbsp;&nbsp;{{totalPriceText}}&nbsp;&nbsp; บาท</strong>&nbsp;&nbsp;
+                      <strong>(เงิน&nbsp;&nbsp; {{BathText()}})</strong>
+                    </td>
+                    <td></td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>ได้รับเงินเมื่อวันที่&nbsp;&nbsp;....................................</strong>
+                    </td>
+                    <td class="text-right"><strong>หมายเลขใบสั่งซื้อ &nbsp;&nbsp;{{id_reference}}</strong></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <div class="d-flex">
+                <div class="ml-auto">
+                  <br />
+                  <h6>ผู้รับเงิน.................................................................</h6>
+                  <br />
+                  <h6 *ngIf="member_cash">(&nbsp;&nbsp;{{ member_cash.firstname}} {{
+                    member_cash.lastname}}&nbsp;&nbsp;)</h6>
+
+                  <h6 *ngIf="!member_cash">(&nbsp;&nbsp;.........................................................&nbsp;&nbsp;)</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <br/>
+          <div class="row d-print-none mt-2">
+            <div class="col-12 text-center"><a class="btn btn-danger" href="javascript:window.print();" target="_blank"><i class="fa fa-print"></i> พิมพ์</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</app-auth-content>

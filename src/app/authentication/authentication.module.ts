@@ -5,6 +5,7 @@ import { AuthenticationRouting } from './authentication.routing';
 import { SharedsModule } from '../shareds/shareds.module';
 import { CreatePersonComponent } from './components/create-person/create-person.component';
 import { AddItemComponent } from './components/create-order/add-item/add-item.component';
+import { SearchReceiptsComponent } from './components/search-receipts/search-receipts.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { AddItemComponent } from './components/create-order/add-item/add-item.co
     CreateOrderComponent,
     CreatePersonComponent,
     AddItemComponent,
+    SearchReceiptsComponent,
   ],
   /*providers: [
   AddlistService

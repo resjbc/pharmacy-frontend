@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertService } from './services/alert.service';
 import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
+// for ES6
+
 
 @NgModule({
   imports: [
@@ -25,7 +27,7 @@ import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angu
   declarations: [
     AuthContentComponent,
     AuthNavbarComponent,
-    AuthSidebarComponent
+    AuthSidebarComponent,
   ],
   exports: [
     AuthContentComponent,

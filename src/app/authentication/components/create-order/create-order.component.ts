@@ -10,6 +10,7 @@ import { PersonService } from '../../services/person.service';
 import { IPerson } from '../create-person/person.interface';
 import { IRoleAccount } from '../../../shareds/services/account.service';
 import { ReceiptService } from '../../services/receipt.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-order',
@@ -36,9 +37,11 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
     private modalService: BsModalService,
     private alert: AlertService,
     private personService: PersonService,
-    private receiptService: ReceiptService
+    private receiptService: ReceiptService,
+    private router: Router
   ) {
     this.initialCreateFormData();
+
   }
 
   form: FormGroup;
@@ -46,11 +49,8 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
 
   onSubmit() {
     if (this.form.invalid) return this.alert.someting_wrong();
-    //this.flagPrint = true; 
-    //console.log(this.id_recipt);
-
+    else if(!this.i_person) return this.alert.notify("เพิ่มผู้ประกอบการคนนี้ในระบบก่อน");
     
-
     this.receipt = {
       id_person: this.i_person.id_person,
       date_created: !this.id_receipt ? new Date() : this.receipt.date_created,
@@ -61,9 +61,11 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
       receiptDetails: this.listItems
     }
 
-    if(this.id_receipt) this.receipt.id_receipt = this.id_receipt;
+    if(!this.receipt.id_person) return this.alert.notify("เพิ่มผู้ประกอบการคนนี้ในระบบก่อน");
 
-    console.log(this.receipt);  
+    if (this.id_receipt) this.receipt.id_receipt = this.id_receipt;
+
+    //console.log(this.receipt);  
 
     this.receiptService.createReceipt(this.receipt).then(result => {
 
@@ -71,8 +73,11 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
         this.receipt = result;
         this.id_receipt = this.receipt.id_receipt;
         this.listItems = this.receipt.receiptDetails
-        console.log(result);
       }
+     
+       this.flagPrint = true; 
+
+      this.alert.notify("บันทึกข้อมูลสำเร็จแล้ว","info");
 
     }).catch(err => this.alert.notify(err.Message));
 
@@ -105,14 +110,28 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
       return;
     }
     this.listItems.push(listItem_);
+    this.flagPrint = false; 
   }
 
   onDeleteListItem(index: number) {
-    //this.listItems.pop();
+
     this.alert
       .confirm('ต้องการลบรายการใช่หรือไม่')
       .then(status => {
-        if (status) this.listItems.splice(index, 1);
+        if (!status) return;
+        else {
+          if (!this.id_receipt) {
+            this.listItems.splice(index, 1);
+            return;
+          }
+          //console.log(this.listItems[index].id_receipt_detail);
+          this.receiptService
+            .deleteReceiptDetail(this.listItems[index].id_receipt_detail)
+            .then(() => {
+              this.listItems.splice(index, 1);
+            })
+            .catch(err => this.alert.notify(err.Message))
+        }
       })
   }
 
@@ -150,6 +169,23 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
       .catch(err => {
         this.alert.notify(err.Message);
       });
+  }
+
+  clearReceipt() {
+    this.receipt = null;
+    this.i_person = null;
+    this.listItems = [];
+    this.flagPrint = false; 
+    this.initialCreateFormData();
+  }
+
+  toPrint() {
+    this.router.navigate(['',
+      AppURL.Authen, 
+      AuthURL.SearchReceipts, 
+      this.receipt.id_reference
+    ]);//, {queryParams: {id: item.id}});
+
   }
 
   /*getRoleName(role: IRoleAccount) {

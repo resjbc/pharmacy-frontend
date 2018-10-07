@@ -1,0 +1,30 @@
+@media print {
+    body * {
+      visibility: hidden;
+    }
+
+    #section-to-print-no {
+        visibility: hidden;
+    }
+
+    #section-to-print, #section-to-print * {
+      visibility: visible;
+    }
+    #section-to-print {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+    }
+  }
+
+  hr.style5 {
+    background-color: #fff;
+    border-top: 2px dashed #333;
+  }
+
+  hr.style1{
+    border-top: 3px solid #333;
+  }
+
+  
