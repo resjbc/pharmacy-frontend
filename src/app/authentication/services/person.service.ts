@@ -15,4 +15,16 @@ export class PersonService {
                .requestGet(`person/${pid}`)
                .toPromise() as Promise<IPerson>;
   }
+
+  getPersons() {
+    return this.http
+               .requestGet(`person/`)
+               .toPromise() as Promise<IPerson[]>;
+  }
+
+  addPerson(person) {
+    return this.http
+               .requestPost(`person/add`,person)
+               .toPromise() as Promise<IPerson>;
+  }
 }
