@@ -74,12 +74,16 @@ export class CreatePersonComponent implements OnInit {
     }
   }
 
+  onEdit(person){
+    console.log(person);
+  }
+
   /*getRoleName(role: IRoleAccount) {
     return IRoleAccount[role];
   }*/
 }
 
-/** Builds and returns a new User. */
+/** Builds and returns a new User. 
 function createNewUser(id: number): UserData {
   const firstname =
     NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
@@ -93,6 +97,6 @@ function createNewUser(id: number): UserData {
     color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
   };
 
-}
+}*/
 
 

@@ -12,7 +12,6 @@
   <div class="row">
     <div class="col-md-12">
       <div class="tile">
-
         <div class="tile-body">
           <div class="row">
             <div class="col-md-12">
@@ -75,14 +74,14 @@
                 <button class="btn btn-info icon-btn form-control" (click)="toPrint()" type="button"><i class="fa fa-user-plus"></i>เพิ่มผู้ประกอบการ</button>
               </div>
               <div class='form-group text-right'>
-                  <button class="btn btn-danger icon-btn form-control " *ngIf="false" (click)="toPrint()" type="button">บันทึก</button>
-                </div>
+                <button class="btn btn-danger icon-btn form-control " *ngIf="false" (click)="toPrint()" type="button">บันทึก</button>
+              </div>
             </div>
             <div class="col-md-6">
-                
-                  <div class='form-group text-left'>
-                    <button class="btn btn-secondary icon-btn  form-control" *ngIf="false" (click)="toPrint()" type="button">ยกเลิก</button>
-                  </div>
+
+              <div class='form-group text-left'>
+                <button class="btn btn-secondary icon-btn  form-control" *ngIf="false" (click)="toPrint()" type="button">ยกเลิก</button>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -93,6 +92,15 @@
               <p></p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
           <div class="row">
             <div class="col-md-12">
               <mat-form-field>
@@ -100,50 +108,55 @@
               </mat-form-field>
 
               <div class="mat-elevation-z8">
-                <table class="table-hover" mat-table [dataSource]="dataSource" matSort>
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                  </tr>
-                  <!-- CID Column -->
-                  <ng-container matColumnDef="cid">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> เลขบัตรประชาชน </th>
-                    <td mat-cell *matCellDef="let row"> {{row.cid}} </td>
-                  </ng-container>
+                <div class="col-12 table-responsive">
+                  <table class="table-hover" mat-table [dataSource]="dataSource" matSort>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                    <!-- CID Column -->
+                    <ng-container matColumnDef="cid">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> เลขบัตรประชาชน </th>
+                      <td mat-cell *matCellDef="let row"> {{row.cid}} </td>
+                    </ng-container>
 
-                  <!-- FirstName Column -->
-                  <ng-container matColumnDef="firstname">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ชื่อ</th>
-                    <td mat-cell *matCellDef="let row"> {{row.firstname}} </td>
-                  </ng-container>
+                    <!-- FirstName Column -->
+                    <ng-container matColumnDef="firstname">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> ชื่อ</th>
+                      <td mat-cell *matCellDef="let row"> {{row.firstname}} </td>
+                    </ng-container>
 
-                   <!-- LastName Column -->
-                   <ng-container matColumnDef="lastname">
+                    <!-- LastName Column -->
+                    <ng-container matColumnDef="lastname">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> นามสกุล</th>
                       <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
                     </ng-container>
 
-                  <!-- MobilePhone Column -->
-                  <ng-container matColumnDef="mobile">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> เบอร์โทรศัพท์ </th>
-                    <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
-                  </ng-container>
+                    <!-- MobilePhone Column -->
+                    <ng-container matColumnDef="mobile">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> เบอร์โทรศัพท์ </th>
+                      <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
+                    </ng-container>
 
-                  <!-- Setting Column -->
-                  <ng-container matColumnDef="setting">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                    </th>
-                    <td mat-cell *matCellDef="let row" >  </td>
-                  </ng-container>
+                    <!-- Setting Column -->
+                    <ng-container matColumnDef="setting">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      </th>
+                      <td mat-cell *matCellDef="let row" class="text-left">
+                        <div class="mx-auto" style="width: 100px;">
+                          <i (click)="onEdit(row)" class="fa fa-edit cur"></i><span> | </span><i (click)="onEdit(row)"
+                            class="fa fa-trash  cur"></i>
+                        </div>
+                      </td>
+                    </ng-container>
 
 
-                </table>
-
+                  </table>
+                </div>
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
