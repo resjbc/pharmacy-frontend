@@ -80,6 +80,8 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
         this.id_receipt = receipt.id_receipt;
         this.id_receipt_cash = receipt.id_receipt_cash;
         this.id_receipt_cash_number = receipt.id_receipt_cash_number
+
+        if(receipt.person === null) this.alert.notify("ใบสั่งซื้อนี้ไม่สมบรูณ์เพราะไม่มีข้อมูลผู้ประกอบการ")
       })
       .catch(err => this.alert.notify(err.Message));
   }

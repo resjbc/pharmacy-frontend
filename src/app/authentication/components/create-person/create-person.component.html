@@ -15,20 +15,20 @@
         <div class="tile-body">
           <div class="row">
             <div class="col-md-12">
-              <form>
+              <form [formGroup]="form" (submit)="onAddPerson()">
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label for="">ชื่อ</label>
-                          <input type="text" class="form-control">
+                          <input type="text" formControlName="firstname" class="form-control">
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label for="">นามสกุล</label>
-                          <input type="text" class="form-control">
+                          <input type="text" formControlName="lastname" class="form-control">
                         </div>
                       </div>
                     </div>
@@ -36,13 +36,13 @@
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label for="">เลขบัตรประชาชน</label>
-                          <input type="text" class="form-control">
+                          <input type="type"  formControlName="cid" class="form-control">
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label for="">เบอร์โทร</label>
-                          <input type="text" class="form-control">
+                          <input type="text" formControlName="mobile" class="form-control">
                         </div>
                       </div>
                     </div>
@@ -53,37 +53,36 @@
                       <div class="col-sm-12">
                         <div class="form-group">
                           <label for="">ที่อยู่</label>
-                          <textarea rows="5" type="text" class="form-control"></textarea>
+                          <textarea rows="5" type="text" formControlName="address" class="form-control"></textarea>
                         </div>
                       </div>
                     </div>
+                    <br />
                     <div class="row">
-                      <div class="col-sm-12">
-
-                      </div>
+                        <div class="col-md">
+                            <div class='form-group text-right' *ngIf="!flagEdit">
+                              <button class="btn btn-info icon-btn form-control"  type="submit"><i class="fa fa-user-plus"></i>เพิ่มผู้ประกอบการ</button>
+                            </div>
+                            <div class='form-group text-right' *ngIf="flagEdit">
+                              <button class="btn btn-danger icon-btn form-control "  (click)="onUpdatePerson()" type="button">บันทึก</button>
+                            </div>
+                          </div>
+                          <div class="col-md">
+                              <div class='form-group text-right'  *ngIf="!flagEdit">
+                                  <button class="btn btn-secondary icon-btn  form-control" (click)="onClearForm()" type="button">รีเซ็ต</button>
+                                </div>
+                            <div class='form-group text-left'  *ngIf="flagEdit">
+                              <button class="btn btn-secondary icon-btn  form-control" (click)="onClearForm()" type="button">ยกเลิก</button>
+                            </div>
+                          </div>
                     </div>
                   </div>
                 </div>
               </form>
             </div>
           </div>
-          <br />
-          <div class="row">
-            <div class="col-md-6">
-              <div class='form-group text-right'>
-                <button class="btn btn-info icon-btn form-control" (click)="toPrint()" type="button"><i class="fa fa-user-plus"></i>เพิ่มผู้ประกอบการ</button>
-              </div>
-              <div class='form-group text-right'>
-                <button class="btn btn-danger icon-btn form-control " *ngIf="false" (click)="toPrint()" type="button">บันทึก</button>
-              </div>
-            </div>
-            <div class="col-md-6">
+          
 
-              <div class='form-group text-left'>
-                <button class="btn btn-secondary icon-btn  form-control" *ngIf="false" (click)="toPrint()" type="button">ยกเลิก</button>
-              </div>
-            </div>
-          </div>
           <div class="row">
             <div class="col-md-12">
               <!--<hr class="style1" />-->
@@ -133,15 +132,15 @@
 
                     <!-- MobilePhone Column -->
                     <ng-container matColumnDef="mobile">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header> เบอร์โทรศัพท์ </th>
-                      <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
+                      <th class='text-center' mat-header-cell *matHeaderCellDef mat-sort-header> เบอร์โทรศัพท์ </th>
+                      <td class='text-center' mat-cell *matCellDef="let row"> {{row.mobile || '-'}} </td>
                     </ng-container>
 
                     <!-- Edit Column -->
                     <ng-container matColumnDef="edit">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                       <td mat-cell *matCellDef="let row" class='text-right'>
-                          <button type="button" (click)="onEdit(row.id_person)" class="btn btn-success btn-md">แก้ไข</button>
+                          <button type="button" (click)="onEdit(row)" class="btn btn-success btn-md">แก้ไข</button>
                       </td>
 
                     </ng-container>
@@ -149,7 +148,7 @@
                      <ng-container matColumnDef="delete">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                         <td mat-cell *matCellDef="let row" class='text-left'>
-                            <button type="button" (click)="onDelete(row.id_person)"class="btn btn-danger btn-md">ลบ</button>
+                            <button type="button" (click)="onDelete(row)"class="btn btn-danger btn-md">ลบ</button>
                         </td>
                       </ng-container>
                   </table>

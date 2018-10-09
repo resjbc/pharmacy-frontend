@@ -49,8 +49,8 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
 
   onSubmit() {
     if (this.form.invalid) return this.alert.someting_wrong();
-    else if(!this.i_person) return this.alert.notify("เพิ่มผู้ประกอบการคนนี้ในระบบก่อน");
-    
+    else if (!this.i_person) return this.alert.notify("เพิ่มผู้ประกอบการคนนี้ในระบบก่อน");
+
     this.receipt = {
       id_person: this.i_person.id_person,
       date_created: !this.id_receipt ? new Date() : this.receipt.date_created,
@@ -61,7 +61,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
       receiptDetails: this.listItems
     }
 
-    if(!this.receipt.id_person) return this.alert.notify("เพิ่มผู้ประกอบการคนนี้ในระบบก่อน");
+    if (!this.receipt.id_person) return this.alert.notify("เพิ่มผู้ประกอบการคนนี้ในระบบก่อน");
 
     if (this.id_receipt) this.receipt.id_receipt = this.id_receipt;
 
@@ -74,10 +74,13 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
         this.id_receipt = this.receipt.id_receipt;
         this.listItems = this.receipt.receiptDetails
       }
-     
-       this.flagPrint = true; 
 
-      this.alert.notify("บันทึกข้อมูลสำเร็จแล้ว","info");
+      this.flagPrint = true;
+
+      this.alert.confirm("บันทึกข้อมูลสำเร็จแล้ว ต้องการไปหน้าพิมพ์หรือไม่")
+        .then(status => {
+          if (status) this.toPrint();
+        })
 
     }).catch(err => this.alert.notify(err.Message));
 
@@ -110,7 +113,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
       return;
     }
     this.listItems.push(listItem_);
-    this.flagPrint = false; 
+    this.flagPrint = false;
   }
 
   onDeleteListItem(index: number) {
@@ -175,19 +178,19 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
     this.receipt = null;
     this.i_person = null;
     this.listItems = [];
-    this.flagPrint = false; 
+    this.flagPrint = false;
     this.initialCreateFormData();
   }
 
   toPrint() {
     this.router.navigate(['',
-      AppURL.Authen, 
-      AuthURL.SearchReceipts, 
+      AppURL.Authen,
+      AuthURL.SearchReceipts,
       this.receipt.id_reference
     ]);//, {queryParams: {id: item.id}});
 
   }
 
-  
+
 
 }

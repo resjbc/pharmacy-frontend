@@ -4,26 +4,9 @@ import { AppURL } from '../../../app.url';
 import { AuthURL } from '../../authentication.url';
 import { PersonService } from '../../services/person.service';
 import { AlertService } from '../../../shareds/services/alert.service';
-import { IPerson } from './person.interface';
+import { IPerson, ICreatePersonComponent } from './person.interface';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-export interface UserData {
-  id: string;
-  firstname: string;
-  lastname: string;
-  progress: string;
-  color: string;
-}
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-
-/**
- * @title Data table with sorting, pagination, and filtering.
- */
 
 
 @Component({
@@ -31,7 +14,13 @@ const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
   templateUrl: './create-person.component.html',
   styleUrls: ['./create-person.component.css']
 })
-export class CreatePersonComponent implements OnInit {
+export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
+  
+
+  form: FormGroup;
+  person: IPerson = null;
+  flagEdit: boolean = false;
+
 
   displayedColumns: string[] = ['cid', 'firstname', 'lastname', 'mobile', 'edit', 'delete'];
   dataSource: MatTableDataSource<IPerson>;
@@ -42,19 +31,36 @@ export class CreatePersonComponent implements OnInit {
   AppURL = AppURL;
   AuthURL = AuthURL;
 
+
+
   constructor(
     private personService: PersonService,
-    private alert: AlertService
+    private alert: AlertService,
+    private build: FormBuilder,
   ) {
-    /*// Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));*/
-
-    // Assign the data to the data source for the table to render
 
   }
 
   ngOnInit() {
     this.loadPersons();
+    this.initialCreateFormData();
+  }
+
+  onSubmit() {
+  }
+
+  initialCreateFormData() {
+    this.form = this.build.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+      cid: ['', [Validators.required,Validators.pattern("[0-9]{13,13}")]],
+      address: [''],
+      mobile: ['',[Validators.pattern("[0-9]{8,10}")]],
+      username: [''],
+      password: [''],
+      role: [''],
+      id_person: [null]
+    });
   }
 
   loadPersons() {
@@ -75,18 +81,51 @@ export class CreatePersonComponent implements OnInit {
   }
 
   onEdit(person) {
-    console.log(person);
+    this.form.patchValue(person);
+    this.flagEdit = true;
   }
 
   onDelete(person) {
-    this.alert.confirm("ต้องการลบใช่หรือไม่")
+    this.alert.confirm(`ต้องการลบคุณ ${person.firstname} ${person.lastname} ใช่หรือไม่`)
       .then(status => {
         if (status)
-          this.personService.removePerson(person)
+          this.personService.removePerson(person.id_person)
             .then(() => {
               this.loadPersons();
             }).catch(err => this.alert.notify(err.Message));
       })
+  }
+
+  onAddPerson() {
+    if (this.form.invalid) return this.alert.someting_wrong();
+    this.person = this.form.value;
+    this.person.role = 1;
+    this.personService.addPerson(this.person)
+        .then(() => {
+          this.alert.notify("เพิ่มผู้ประกอบการสำเร็จแล้ว","info");
+          this.onClearForm()
+          this.loadPersons();
+        })
+        .catch(err => this.alert.notify(err.Message));
+    
+  }
+
+  onUpdatePerson() {
+    if (this.form.invalid) return this.alert.someting_wrong();
+    this.person = this.form.value;
+    this.person.role = 1;
+    this.personService.addPerson(this.person)
+        .then(() => {
+          this.alert.notify("แก้ไขข้มูลสำเร็จแล้ว","info");
+          this.onClearForm()
+          this.loadPersons();
+        })
+        .catch(err => this.alert.notify(err.Message));
+  }
+
+  onClearForm() {
+    this.form.reset();
+    this.flagEdit = false;
   }
 
   /*getRoleName(role: IRoleAccount) {
