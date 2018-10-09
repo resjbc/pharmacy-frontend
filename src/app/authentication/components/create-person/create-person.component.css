@@ -8,8 +8,8 @@ table {
     background:#fff;
   }
   
-  td, th {
-    width: 25%;
+  td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+    padding-right: 5px;
   }
 
   hr.style1{

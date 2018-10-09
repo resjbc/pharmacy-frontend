@@ -33,7 +33,7 @@ const NAMES: string[] = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
 })
 export class CreatePersonComponent implements OnInit {
 
-  displayedColumns: string[] = ['cid', 'firstname', 'lastname', 'mobile', 'setting'];
+  displayedColumns: string[] = ['cid', 'firstname', 'lastname', 'mobile', 'edit', 'delete'];
   dataSource: MatTableDataSource<IPerson>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -48,7 +48,7 @@ export class CreatePersonComponent implements OnInit {
   ) {
     /*// Create 100 users
     const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));*/
-    
+
     // Assign the data to the data source for the table to render
 
   }
@@ -57,7 +57,7 @@ export class CreatePersonComponent implements OnInit {
     this.loadPersons();
   }
 
-  loadPersons(){
+  loadPersons() {
     this.personService.getPersons().then(person => {
       this.dataSource = new MatTableDataSource(person);
       this.dataSource.paginator = this.paginator;
@@ -74,8 +74,19 @@ export class CreatePersonComponent implements OnInit {
     }
   }
 
-  onEdit(person){
+  onEdit(person) {
     console.log(person);
+  }
+
+  onDelete(person) {
+    this.alert.confirm("ต้องการลบใช่หรือไม่")
+      .then(status => {
+        if (status)
+          this.personService.removePerson(person)
+            .then(() => {
+              this.loadPersons();
+            }).catch(err => this.alert.notify(err.Message));
+      })
   }
 
   /*getRoleName(role: IRoleAccount) {

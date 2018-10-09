@@ -27,4 +27,10 @@ export class PersonService {
                .requestPost(`person/add`,person)
                .toPromise() as Promise<IPerson>;
   }
+
+  removePerson(person) {
+    return this.http
+               .requestDelete(`person/${person}`)
+               .toPromise() as Promise<any>;
+  }
 }

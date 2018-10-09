@@ -137,19 +137,21 @@
                       <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
                     </ng-container>
 
-                    <!-- Setting Column -->
-                    <ng-container matColumnDef="setting">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                      </th>
-                      <td mat-cell *matCellDef="let row" class="text-left">
-                        <div class="mx-auto" style="width: 100px;">
-                          <i (click)="onEdit(row)" class="fa fa-edit cur"></i><span> | </span><i (click)="onEdit(row)"
-                            class="fa fa-trash  cur"></i>
-                        </div>
+                    <!-- Edit Column -->
+                    <ng-container matColumnDef="edit">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                      <td mat-cell *matCellDef="let row" class='text-right'>
+                          <button type="button" (click)="onEdit(row.id_person)" class="btn btn-success btn-md">แก้ไข</button>
                       </td>
+
                     </ng-container>
-
-
+                     <!-- Delete Column -->
+                     <ng-container matColumnDef="delete">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                        <td mat-cell *matCellDef="let row" class='text-left'>
+                            <button type="button" (click)="onDelete(row.id_person)"class="btn btn-danger btn-md">ลบ</button>
+                        </td>
+                      </ng-container>
                   </table>
                 </div>
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
