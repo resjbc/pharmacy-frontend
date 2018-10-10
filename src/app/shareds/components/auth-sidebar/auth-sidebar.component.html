@@ -43,9 +43,9 @@
         <i class="treeview-indicator fa fa-angle-right"></i>
       </a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item" routerLinkActive="active" href="#"><i class="icon fa fa-circle-o"></i>พรบ</a></li>
-        <li><a class="treeview-item" routerLinkActive="active" href="#"  rel="noopener"><i class="icon fa fa-circle-o"></i>ประเภทค่าธรรมเนียม</a></li>
-        <li><a class="treeview-item" routerLinkActive="active" href=#><i class="icon fa fa-circle-o"></i> รายการ</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateAct]" routerLinkActive="active" href="#"><i class="icon fa fa-circle-o"></i>พรบ</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateTypeFee]" routerLinkActive="active" href="#"  rel="noopener"><i class="icon fa fa-circle-o"></i>ประเภทค่าธรรมเนียม</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateListFee]" routerLinkActive="active" href=#><i class="icon fa fa-circle-o"></i> รายการ</a></li>
 
       </ul>
     </li>

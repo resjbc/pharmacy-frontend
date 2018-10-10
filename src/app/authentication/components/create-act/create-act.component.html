@@ -1,0 +1,124 @@
+<app-auth-content>
+
+  <div class="app-title">
+    <div>
+      <h1><i class="fa fa-file"></i> เพิ่ม พรบ</h1>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/', AppURL.Authen, AuthURL.CreateAct]">เพิ่ม พรบ</a></li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+
+          <form [formGroup]="form" (submit)="onAddAct()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">พรบ</label>
+                  <input type="text" formControlName="description" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+
+              <div class="col-md">
+                <div class='form-group text-right' *ngIf="!flagEdit">
+                  <button class="btn btn-info icon-btn form-control" type="submit"><i class="fa fa-plus"></i>เพิ่ม พรบ</button>
+                </div>
+                <div class='form-group text-right' *ngIf="flagEdit">
+                  <button class="btn btn-danger icon-btn form-control " (click)="onUpdateAct()" type="button">บันทึก</button>
+                </div>
+              </div>
+              <div class="col-md">
+                <div class='form-group text-right' *ngIf="!flagEdit">
+                  <button class="btn btn-secondary icon-btn  form-control" (click)="onClearForm()" type="button">รีเซ็ต</button>
+                </div>
+                <div class='form-group text-left' *ngIf="flagEdit">
+                  <button class="btn btn-secondary icon-btn  form-control" (click)="onClearForm()" type="button">ยกเลิก</button>
+                </div>
+
+
+              </div>
+
+            </div>
+          </form>
+
+          <div class="row">
+            <div class="col-md-12">
+              <!--<hr class="style1" />-->
+              <p></p>
+              <p></p>
+              <p></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="ค้นหา">
+              </mat-form-field>
+
+              <div class="mat-elevation-z8">
+                <div class="col-12 table-responsive">
+                  <table class="table-hover" mat-table [dataSource]="dataSource" matSort>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+                    <!-- ID_ACT Column -->
+                    <ng-container matColumnDef="id_act">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> ลำดับ </th>
+                      <td mat-cell *matCellDef="let row; let i = index;" > {{i+1}} </td>
+                    </ng-container>
+
+                    <!--Description  Column -->
+                    <ng-container matColumnDef="description">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> พรบ</th>
+                      <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+                    </ng-container>
+
+                    <!-- Edit Column -->
+                    <ng-container matColumnDef="edit">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                      <td mat-cell *matCellDef="let row" class='text-right'>
+                        <button type="button" (click)="onEdit(row)" class="btn btn-success btn-md">แก้ไข</button>
+                      </td>
+
+                    </ng-container>
+                    <!-- Delete Column -->
+                    <ng-container matColumnDef="delete">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                      <td mat-cell *matCellDef="let row" class='text-left'>
+                        <button type="button" (click)="onDelete(row)" class="btn btn-danger btn-md">ลบ</button>
+                      </td>
+                    </ng-container>
+
+
+
+                  </table>
+                </div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-auth-content>

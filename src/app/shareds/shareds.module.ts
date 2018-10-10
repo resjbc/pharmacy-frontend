@@ -7,7 +7,7 @@ import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.com
 import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertService } from './services/alert.service';
-import { MatAutocompleteModule, MatFormFieldModule, MatInputModule ,MatTableModule ,MatPaginatorModule} from '@angular/material';
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule ,MatTableModule ,MatPaginatorModule, MatSortModule} from '@angular/material';
 
 // for ES6
 
@@ -25,6 +25,7 @@ import { MatAutocompleteModule, MatFormFieldModule, MatInputModule ,MatTableModu
     MatPaginatorModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSortModule
   ],
   declarations: [
     AuthContentComponent,
@@ -44,6 +45,7 @@ import { MatAutocompleteModule, MatFormFieldModule, MatInputModule ,MatTableModu
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSortModule
   ],
   providers: [
     AlertService

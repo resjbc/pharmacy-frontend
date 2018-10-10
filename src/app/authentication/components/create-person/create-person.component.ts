@@ -51,14 +51,14 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
 
   initialCreateFormData() {
     this.form = this.build.group({
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+      firstname: ['', [Validators.required,Validators.pattern('^[ก-ฮa-zA-Z]+$')]],
+      lastname: ['', [Validators.required,Validators.pattern('^[ก-ฮa-zA-Z]+$')]],
       cid: ['', [Validators.required,Validators.pattern("[0-9]{13,13}")]],
       address: [''],
       mobile: ['',[Validators.pattern("[0-9]{8,10}")]],
       username: [''],
       password: [''],
-      role: [''],
+      role: [1],
       id_person: [null]
     });
   }
@@ -92,6 +92,7 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
           this.personService.removePerson(person.id_person)
             .then(() => {
               this.loadPersons();
+              this.onClearForm();
             }).catch(err => this.alert.notify(err.Message));
       })
   }
@@ -103,7 +104,7 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
     this.personService.addPerson(this.person)
         .then(() => {
           this.alert.notify("เพิ่มผู้ประกอบการสำเร็จแล้ว","info");
-          this.onClearForm()
+          this.onClearForm();
           this.loadPersons();
         })
         .catch(err => this.alert.notify(err.Message));

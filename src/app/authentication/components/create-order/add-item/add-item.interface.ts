@@ -15,7 +15,7 @@ export interface IAddItem {
 }
 
 export interface IActItem {
-    id_act: number,
+    id_act?: number,
     description: string
 }
 

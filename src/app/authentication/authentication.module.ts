@@ -6,6 +6,9 @@ import { SharedsModule } from '../shareds/shareds.module';
 import { CreatePersonComponent } from './components/create-person/create-person.component';
 import { AddItemComponent } from './components/create-order/add-item/add-item.component';
 import { SearchReceiptsComponent } from './components/search-receipts/search-receipts.component';
+import { CreateActComponent } from './components/create-act/create-act.component';
+import { CreateTypefeeComponent } from './components/create-typefee/create-typefee.component';
+import { CreateListfeeComponent } from './components/create-listfee/create-listfee.component';
 
 @NgModule({
   imports: [
@@ -18,6 +21,9 @@ import { SearchReceiptsComponent } from './components/search-receipts/search-rec
     CreatePersonComponent,
     AddItemComponent,
     SearchReceiptsComponent,
+    CreateActComponent,
+    CreateTypefeeComponent,
+    CreateListfeeComponent,
   ],
   /*providers: [
   AddlistService
