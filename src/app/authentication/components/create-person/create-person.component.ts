@@ -51,8 +51,8 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
 
   initialCreateFormData() {
     this.form = this.build.group({
-      firstname: ['', [Validators.required,Validators.pattern('^[ก-ฮa-zA-Z]+$')]],
-      lastname: ['', [Validators.required,Validators.pattern('^[ก-ฮa-zA-Z]+$')]],
+      firstname: ['', [Validators.required,Validators.pattern('^[ก-๏\sa-zA-Z]+$')]],
+      lastname: ['', [Validators.required,Validators.pattern('^[ก-๏\sa-zA-Z]+$')]],
       cid: ['', [Validators.required,Validators.pattern("[0-9]{13,13}")]],
       address: [''],
       mobile: ['',[Validators.pattern("[0-9]{8,10}")]],

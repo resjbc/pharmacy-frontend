@@ -47,12 +47,10 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
     this.initialCreateFormData();
   }
 
-  onSubmit() {
-  }
 
   initialCreateFormData() {
     this.form = this.build.group({
-      description: ['', [Validators.required,Validators.pattern('^[ก-ฮa-zA-Z]+$')]],
+      description: ['', [Validators.required,Validators.pattern('^[ก-๏\sa-zA-Z]+$')]],
       id_act: [null]
     });
   }

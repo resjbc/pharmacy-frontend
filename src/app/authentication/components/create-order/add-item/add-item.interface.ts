@@ -20,7 +20,8 @@ export interface IActItem {
 }
 
 export interface ITypeItem {
-    id_type: number,
+    id_type?: number,
+    id_act?: number,
     description: string
 }
 

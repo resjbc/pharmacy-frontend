@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidationErrors, AbstractControl } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
 import { IAddItemComponent, IActItem, ITypeItem, IListItem } from './add-item.interface';
 import { AlertService } from '../../../../shareds/services/alert.service';
 import { AddlistService } from '../../../services/addlist.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
 
@@ -16,16 +16,22 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./add-item.component.css'],
   providers: [AddlistService]
 })
-export class AddItemComponent implements OnInit, IAddItemComponent {
-
+export class AddItemComponent implements OnInit,OnDestroy, IAddItemComponent {
+ 
   // myControl = new FormControl();
   //options: string[] = ['One', 'Two', 'Three'];
   filteredLists: Observable<IListItem[]>;
-
+  private subscr: Subscription;
+  
   ngOnInit(): void {
     this.onChanges();
     this.getActs();
   }
+
+  ngOnDestroy(){
+    this.subscr.unsubscribe();
+  }
+
 
   constructor(
     private builder: FormBuilder,
@@ -45,13 +51,13 @@ export class AddItemComponent implements OnInit, IAddItemComponent {
 
 
   onSubmit(): void {
-    let list =  this.lists.find(list => list.description === this.form.controls.list.value);
+    let list = this.lists.find(list => list.description === this.form.controls.list.value);
     if (!list) {
       return this.alert.notify('ไม่พบรายการนี้');
     }
-    
+
     list.type = this.types.find(type => type.id_type == this.form.controls.type.value).description;
-    
+
     //console.log(list);
     this.listitem.emit(list);
   }
@@ -82,7 +88,7 @@ export class AddItemComponent implements OnInit, IAddItemComponent {
 
 
   onChanges() {
-    this.form.get('act').valueChanges
+    this.subscr = this.form.get('act').valueChanges
       .subscribe(act => {
         if (act == '') {
           //this.form.get('type').reset();
@@ -128,7 +134,7 @@ export class AddItemComponent implements OnInit, IAddItemComponent {
       .getLists(id_type)
       .then(lists => {
         this.lists = lists;
-    
+
         this.filteredLists = this.form.get('list').valueChanges
           .pipe(
             startWith(''),
