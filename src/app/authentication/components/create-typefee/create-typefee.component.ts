@@ -21,6 +21,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
 
   acts: IActItem[] = null;
   type: ITypeItem = null;
+  id_type: number;
   form: FormGroup;
   flagEdit: boolean = false;
 
@@ -55,8 +56,9 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
 
   initialCreateFormData() {
     this.form = this.build.group({
-      id_act: ['', Validators.required],
-      description: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('^[ก-๏\sa-zA-Z.0-9]+$')]],
+      id_type: [null],
+      id_act: ["", Validators.required],
+      description: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('^[ก-๏\sa-zA-Z.0-9]+$')]]
     });
   }
 
@@ -75,8 +77,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
       this.dataSource = new MatTableDataSource(type);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    })
-      .catch(err => {
+    }).catch(err => {
         this.alert.notify(err.Message);
         this.dataSource = null;
       });
@@ -90,6 +91,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
           this.form.get('description').disable();
         }
         else {
+          this.id_type = act;
           this.loadTypes(act);
           this.form.get('description').enable();
         }
@@ -116,7 +118,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
           this.act_type_list.removeType(type.id_type)
             .then(() => {
               this.onClearForm();
-              this.loadTypes(type);
+              this.loadTypes(this.id_type);
               
             }).catch(err => this.alert.notify(err.Message));
       })
@@ -130,7 +132,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
         if (save) this.alert.notify("เพิ่ม ประเภทค่าธรรมเนียม สำเร็จแล้ว", "info");
         else this.alert.notify("แก้ไขข้มูลสำเร็จแล้ว", "info");
         this.onClearForm();
-        this.loadTypes(this.type);
+        this.loadTypes(this.id_type);
       })
       .catch(err => this.alert.notify(err.Message));
   }
@@ -138,7 +140,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
   onClearForm() {
     this.form.patchValue({
       description: "",
-      id_act: ""
+      id_type: null
     });
     this.flagEdit = false;
   }
