@@ -3,6 +3,7 @@ import { AppURL } from 'src/app/app.url';
 import { AuthURL } from '../../authentication.url';
 import * as dateformat from 'dateformat';
 import { ParamReceiptDate } from './search-receipts-date.interface';
+import { AlertService } from 'src/app/shareds/services/alert.service';
 
 @Component({
   selector: 'app-search-receipts-date',
@@ -19,7 +20,7 @@ export class SearchReceiptsDateComponent implements OnInit, ParamReceiptDate {
   AuthURL = AuthURL;
 
 
-  constructor() { }
+  constructor(private alert : AlertService) { }
 
   ngOnInit() {
   }
@@ -35,8 +36,7 @@ export class SearchReceiptsDateComponent implements OnInit, ParamReceiptDate {
 
   SearchReceiptDate() {
     if(!this.myDateStart || !this.myDateEnd) {
-      console.log("dd"); 
-      return;
+      return this.alert.notify("เลือกวันที่");
     }
     console.log(this.myDateStart , this.myDateEnd);
   }

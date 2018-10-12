@@ -11,7 +11,6 @@
   <div class="row">
     <div class="col-md-12">
       <div class="tile">
-
         <section class="invoice">
           <div class="row">
             <div class="form-group text-center col-md-1"></div>
@@ -46,7 +45,71 @@
             </div>
           </div>
         </section>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="ค้นหา">
+              </mat-form-field>
 
+              <div class="mat-elevation-z8">
+                <div class="col-12 table-responsive">
+                  <table class="table-hover" mat-table [dataSource]="dataSource" matSort>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                    <!-- CID Column -->
+                    <ng-container matColumnDef="cid">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> เลขบัตรประชาชน </th>
+                      <td mat-cell *matCellDef="let row"> {{row.cid}} </td>
+                    </ng-container>
+
+                    <!-- FirstName Column -->
+                    <ng-container matColumnDef="firstname">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> ชื่อ</th>
+                      <td mat-cell *matCellDef="let row"> {{row.firstname}} </td>
+                    </ng-container>
+
+                    <!-- LastName Column -->
+                    <ng-container matColumnDef="lastname">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> นามสกุล</th>
+                      <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
+                    </ng-container>
+
+                    <!-- MobilePhone Column -->
+                    <ng-container matColumnDef="mobile">
+                      <th class='text-center' mat-header-cell *matHeaderCellDef mat-sort-header> เบอร์โทรศัพท์ </th>
+                      <td class='text-center' mat-cell *matCellDef="let row"> {{row.mobile || '-'}} </td>
+                    </ng-container>
+
+                    <!-- Edit Column -->
+                    <ng-container matColumnDef="edit">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                      <td mat-cell *matCellDef="let row" class='text-right'>
+                          <button type="button" (click)="onEdit(row)" class="btn btn-success btn-md">แก้ไข</button>
+                      </td>
+
+                    </ng-container>
+                     <!-- Delete Column -->
+                     <ng-container matColumnDef="delete">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                        <td mat-cell *matCellDef="let row" class='text-left'>
+                            <button type="button" (click)="onDelete(row)"class="btn btn-danger btn-md">ลบ</button>
+                        </td>
+                      </ng-container>
+                  </table>
+                </div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
