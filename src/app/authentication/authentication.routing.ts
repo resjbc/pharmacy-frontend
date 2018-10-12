@@ -6,6 +6,8 @@ import { SearchReceiptsComponent } from './components/search-receipts/search-rec
 import { CreateActComponent } from './components/create-act/create-act.component';
 import { CreateTypefeeComponent } from './components/create-typefee/create-typefee.component';
 import { CreateListfeeComponent } from './components/create-listfee/create-listfee.component';
+import { SearchReceiptsDateComponent } from './components/search-receipts-date/search-receipts-date.component';
+import { SearchReceiptsPersonComponent } from './components/search-receipts-person/search-receipts-person.component';
 
 
 
@@ -20,7 +22,9 @@ const RouterList: Routes = [
         children: [
         { path: '', component: SearchReceiptsComponent  },
         { path: ':id_reference', component: SearchReceiptsComponent  }
-    ] }
+    ] },
+    { path: AuthURL.SearchReceiptsDate, component: SearchReceiptsDateComponent },
+    { path: AuthURL.SearchReceiptsPerson, component: SearchReceiptsPersonComponent }
 ];
 
 export const AuthenticationRouting = RouterModule.forChild(RouterList)

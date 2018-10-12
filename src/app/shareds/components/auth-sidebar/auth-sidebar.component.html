@@ -9,14 +9,24 @@
     </div>
   </div>
   <ul class="app-menu">
-    <li>
-      <a class="app-menu__item " [routerLink]="['/', AppURL.Authen, AuthURL.SearchReceipts]" routerLinkActive="active">
+
+    <li class="treeview" routerLinkActive="is-expanded">
+      <a class="app-menu__item" data-toggle="treeview" href="#">
         <i class="app-menu__icon fa fa-search"></i>
-        <span class="app-menu__label">
-          ค้นหารายการ
-        </span>
+        <span class="app-menu__label">ค้นหาใบสั่งซื้อ</span>
+        <i class="treeview-indicator fa fa-angle-right"></i>
       </a>
+      <ul class="treeview-menu">
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.SearchReceipts]" routerLinkActive="active"
+            href="#"><i class="icon fa fa-circle-o"></i>ตามหมายเลข</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.SearchReceiptsDate]" routerLinkActive="active"
+            href="#" rel="noopener"><i class="icon fa fa-circle-o"></i>ตามวันที่</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.SearchReceiptsPerson]" routerLinkActive="active"
+            href=#><i class="icon fa fa-circle-o"></i> รายบุคคล</a></li>
+
+      </ul>
     </li>
+
 
     <li>
       <a class="app-menu__item " [routerLink]="['/', AppURL.Authen, AuthURL.CreateOrder]" routerLinkActive="active">
@@ -28,13 +38,13 @@
     </li>
 
     <li>
-        <a class="app-menu__item " [routerLink]="['/', AppURL.Authen, AuthURL.CreatePerson]" routerLinkActive="active">
-          <i class="app-menu__icon fa fa-user"></i>
-          <span class="app-menu__label">
-            ผู้ประกอบการ
-          </span>
-        </a>
-      </li>
+      <a class="app-menu__item " [routerLink]="['/', AppURL.Authen, AuthURL.CreatePerson]" routerLinkActive="active">
+        <i class="app-menu__icon fa fa-user"></i>
+        <span class="app-menu__label">
+          ผู้ประกอบการ
+        </span>
+      </a>
+    </li>
 
     <li class="treeview" routerLinkActive="is-expanded">
       <a class="app-menu__item" data-toggle="treeview" href="#">
@@ -43,9 +53,12 @@
         <i class="treeview-indicator fa fa-angle-right"></i>
       </a>
       <ul class="treeview-menu">
-        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateAct]" routerLinkActive="active" href="#"><i class="icon fa fa-circle-o"></i>พรบ</a></li>
-        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateTypeFee]" routerLinkActive="active" href="#"  rel="noopener"><i class="icon fa fa-circle-o"></i>ประเภทค่าธรรมเนียม</a></li>
-        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateListFee]" routerLinkActive="active" href=#><i class="icon fa fa-circle-o"></i> รายการ</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateAct]" routerLinkActive="active"
+            href="#"><i class="icon fa fa-circle-o"></i>พรบ</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateTypeFee]" routerLinkActive="active"
+            href="#" rel="noopener"><i class="icon fa fa-circle-o"></i>ประเภทค่าธรรมเนียม</a></li>
+        <li><a class="treeview-item" [routerLink]="['/', AppURL.Authen, AuthURL.CreateListFee]" routerLinkActive="active"
+            href=#><i class="icon fa fa-circle-o"></i> รายการ</a></li>
 
       </ul>
     </li>
