@@ -1,7 +1,6 @@
 import { IMemberReceipt } from "../create-order/create-order.interface";
 
-export interface ISearchReceiptDate {
-    id_receipt: number;
+export interface ISearchReceiptDateComponent {
     date_created: Date;
     id_reference:number;
     id_receipt_cash?: number,
@@ -9,7 +8,9 @@ export interface ISearchReceiptDate {
     person: IMemberReceipt;
 }
 
-export interface ParamReceiptDate {
+export interface IReceiptDate {
     myDateStart: any;
     myDateEnd: any;
+    
 }
+

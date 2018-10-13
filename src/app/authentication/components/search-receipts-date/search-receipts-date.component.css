@@ -9,7 +9,7 @@ table {
   }
   
   td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
-    padding-right: 5px;
+    padding-right: 0px;
   }
 
   hr.style1{

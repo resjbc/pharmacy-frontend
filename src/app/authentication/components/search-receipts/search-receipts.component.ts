@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AppURL } from '../../../app.url';
 import { AuthURL } from '../../authentication.url';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,9 @@ import { AlertService } from '../../../shareds/services/alert.service';
 import { IPrintReceipt, IMemberReceipt } from '../create-order/create-order.interface';
 import { IListItem } from '../create-order/add-item/add-item.interface';
 import THBText from 'thai-baht-text';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+
+
 
 
 @Component({
@@ -36,14 +39,15 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
   AuthURL = AuthURL;
 
   totalPriceText: number;
-
+  modalRef: BsModalRef;
 
 
 
   constructor(
     private activatedRouter: ActivatedRoute,
     private receiptService: ReceiptService,
-    private alert: AlertService
+    private alert: AlertService,
+    private modalService: BsModalService,
   ) {
   }
 
@@ -102,6 +106,10 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
 
   BathText(){
     return THBText(this.totalPriceText);
+  }
+
+  openModal(templete: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(templete, { class: 'modal-lg' });
   }
 
 

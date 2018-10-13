@@ -20,7 +20,6 @@ import { MatAutocompleteModule,
    DateAdapter, 
    MAT_DATE_FORMATS } from '@angular/material';
 
-// for ES6
 
 
 @NgModule({

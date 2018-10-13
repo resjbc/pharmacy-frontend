@@ -48,6 +48,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource();
     this.initialCreateFormData();
     this.onChanges();
     this.loadActs();

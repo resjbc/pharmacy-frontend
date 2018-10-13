@@ -11,6 +11,7 @@ import { CreateTypefeeComponent } from './components/create-typefee/create-typef
 import { CreateListfeeComponent } from './components/create-listfee/create-listfee.component';
 import { SearchReceiptsDateComponent } from './components/search-receipts-date/search-receipts-date.component';
 import { SearchReceiptsPersonComponent } from './components/search-receipts-person/search-receipts-person.component';
+import { AddCashReferenceComponent } from './components/search-receipts/add-cash-reference/add-cash-reference.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { SearchReceiptsPersonComponent } from './components/search-receipts-pers
     CreateListfeeComponent,
     SearchReceiptsDateComponent,
     SearchReceiptsPersonComponent,
+    AddCashReferenceComponent,
     
   ],
   /*providers: [

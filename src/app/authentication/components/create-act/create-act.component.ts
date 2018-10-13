@@ -43,6 +43,7 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource();
     this.loadActs();
     this.initialCreateFormData();
   }
@@ -61,7 +62,10 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     })
-      .catch(err => this.alert.notify(err.Message));
+      .catch(err => {
+        this.alert.notify(err.Message);
+        this.dataSource = null;
+      });
   }
 
   applyFilter(filterValue: string) {

@@ -96,11 +96,11 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
 
   initialCreateFormData() {
     this.form = this.build.group({
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
-      pid: ['', Validators.required],
-      address: [''],
-      mobile: [''],
+      firstname: [{ value: '', disabled: true }, Validators.required],
+      lastname: [{ value: '', disabled: true }, Validators.required],
+      pid: [{ value: '', disabled: true }, Validators.required],
+      address: [{ value: '', disabled: true }],
+      mobile: [{ value: '', disabled: true }],
       placeName: [''],
       placeAddress: [''],
     });

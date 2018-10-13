@@ -49,6 +49,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource();
     this.initialCreateFormData();
     this.onChangesActs();
     this.onChangesTypes();
@@ -84,7 +85,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
           this.form.get('id_type').disable();
           this.form.get('description').disable();
           this.form.get('price').disable();
-          this.dataSource = null;
+          //this.dataSource = null;
         }
         else {
           this.id_type = act;
@@ -102,7 +103,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
       this.form.get('id_type').disable();
       this.form.get('description').disable();
       this.form.get('price').disable();
-      this.dataSource = null;
+      //this.dataSource = null;
     });
   }
 

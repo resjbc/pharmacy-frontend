@@ -18,17 +18,19 @@
             <div class="form-group text-center col-md-1">
             </div>
             <div class="form-group text-center col-md-3">
-                <h5 class="page-header ">วันที่</h5>
-                <mat-form-field>
-                  <input matInput [matDatepicker]="start"  (dateChange)="onDateStart($event)" placeholder="เลือกวันที่" disabled>
-                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                  <mat-datepicker #start disabled="false" ></mat-datepicker>
-                </mat-form-field>
+              <h5 class="page-header ">วันที่</h5>
+              <mat-form-field>
+                <input matInput [matDatepicker]="start" [(ngModel)]="myDateStart" (dateChange)="onDateStart($event.value)"
+                  placeholder="เลือกวันที่" disabled>
+                <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                <mat-datepicker #start disabled="false"></mat-datepicker>
+              </mat-form-field>
             </div>
             <div class="form-group text-center col-md-3">
               <h5 class="page-header">ถึง</h5>
               <mat-form-field>
-                <input matInput [matDatepicker]="end" (dateChange)="onDateEnd($event)"  placeholder="เลือกวันที่" disabled>
+                <input matInput [matDatepicker]="end" [(ngModel)]="myDateEnd" (dateChange)="onDateEnd($event.value)"
+                  placeholder="เลือกวันที่" disabled>
                 <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                 <mat-datepicker #end disabled="false"></mat-datepicker>
               </mat-form-field>
@@ -64,45 +66,61 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                     </tr>
+                    <!-- Reference Column -->
+                    <ng-container matColumnDef="id_reference">
+                      <th class='text-center' mat-header-cell *matHeaderCellDef mat-sort-header> หมายเลขใบสั่งซื้อ </th>
+                      <td class='text-center' mat-cell *matCellDef="let row" class='text-left'> {{row.id_reference ||
+                        '-'}} </td>
+                    </ng-container>
+
+                    <!-- DateCreated Column -->
+                    <ng-container matColumnDef="date_created">
+                      <th class='text-center' mat-header-cell *matHeaderCellDef mat-sort-header> วันที่ออกใบสั่งซื้อ
+                      </th>
+                      <td class='text-center' mat-cell *matCellDef="let row" class='text-left'>{{row.date_created |
+                        date: 'dd/MM'}}/{{YearThai(row.date_created | date:'yyyy')}}</td>
+                    </ng-container>
+
                     <!-- CID Column -->
                     <ng-container matColumnDef="cid">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> เลขบัตรประชาชน </th>
-                      <td mat-cell *matCellDef="let row"> {{row.cid}} </td>
+                      <td mat-cell *matCellDef="let row"> {{row.person.cid}} </td>
                     </ng-container>
 
                     <!-- FirstName Column -->
                     <ng-container matColumnDef="firstname">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> ชื่อ</th>
-                      <td mat-cell *matCellDef="let row"> {{row.firstname}} </td>
+                      <td mat-cell *matCellDef="let row"> {{row.person.firstname}} </td>
                     </ng-container>
 
                     <!-- LastName Column -->
                     <ng-container matColumnDef="lastname">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> นามสกุล</th>
-                      <td mat-cell *matCellDef="let row"> {{row.lastname}} </td>
+                      <td mat-cell *matCellDef="let row"> {{row.person.lastname}} </td>
                     </ng-container>
 
-                    <!-- MobilePhone Column -->
-                    <ng-container matColumnDef="mobile">
-                      <th class='text-center' mat-header-cell *matHeaderCellDef mat-sort-header> เบอร์โทรศัพท์ </th>
-                      <td class='text-center' mat-cell *matCellDef="let row"> {{row.mobile || '-'}} </td>
+                    <!-- ReferenceCashBook Column -->
+                    <ng-container matColumnDef="id_receipt_cash">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> ใบเสร็จเล่มที่</th>
+                      <td mat-cell *matCellDef="let row"> {{row.id_receipt_cash || '-'}} </td>
                     </ng-container>
 
-                    <!-- Edit Column -->
-                    <ng-container matColumnDef="edit">
+
+                    <!-- ReferenceCash Column -->
+                    <ng-container matColumnDef="id_receipt_cash_number">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> หมายเลขใบเสร็จ</th>
+                      <td mat-cell *matCellDef="let row"> {{row.id_receipt_cash_number || '-'}} </td>
+                    </ng-container>
+
+
+
+                    <!-- Print Column -->
+                    <ng-container matColumnDef="print">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                      <td mat-cell *matCellDef="let row" class='text-right'>
-                          <button type="button" (click)="onEdit(row)" class="btn btn-success btn-md">แก้ไข</button>
+                      <td mat-cell *matCellDef="let row" class='text-left'>
+                        <button type="button" (click)="onReceiptDetail(row.id_reference)" class="btn btn-danger btn-md">ดูรายละเอียด</button>
                       </td>
-
                     </ng-container>
-                     <!-- Delete Column -->
-                     <ng-container matColumnDef="delete">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
-                        <td mat-cell *matCellDef="let row" class='text-left'>
-                            <button type="button" (click)="onDelete(row)"class="btn btn-danger btn-md">ลบ</button>
-                        </td>
-                      </ng-container>
                   </table>
                 </div>
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
