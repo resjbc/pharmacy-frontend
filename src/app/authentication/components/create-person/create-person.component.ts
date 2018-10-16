@@ -6,6 +6,7 @@ import { PersonService } from '../../services/person.service';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { IPerson, ICreatePersonComponent } from './person.interface';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthenService } from 'src/app/services/authen.service';
 
 
 
@@ -37,6 +38,7 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
     private personService: PersonService,
     private alert: AlertService,
     private build: FormBuilder,
+    private authen: AuthenService
   ) {
 
   }
@@ -64,7 +66,7 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
   }
 
   loadPersons() {
-    this.personService.getPersons().then(person => {
+    this.personService.getPersons(this.authen.getAuthenticated()).then(person => {
       this.dataSource = new MatTableDataSource(person);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -89,7 +91,7 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
     this.alert.confirm(`ต้องการลบคุณ ${person.firstname} ${person.lastname} ใช่หรือไม่`)
       .then(status => {
         if (status)
-          this.personService.removePerson(person.id_person)
+          this.personService.removePerson(person.id_person,this.authen.getAuthenticated())
             .then(() => {
               this.loadPersons();
               this.onClearForm();
@@ -101,7 +103,7 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
     if (this.form.invalid) return this.alert.someting_wrong();
     this.person = this.form.value;
     this.person.role = 1;
-    this.personService.addPerson(this.person)
+    this.personService.addPerson(this.person,this.authen.getAuthenticated())
         .then(() => {
           this.alert.notify("เพิ่มผู้ประกอบการสำเร็จแล้ว","info");
           this.onClearForm();
@@ -115,7 +117,7 @@ export class CreatePersonComponent implements OnInit, ICreatePersonComponent {
     if (this.form.invalid) return this.alert.someting_wrong();
     this.person = this.form.value;
     this.person.role = 1;
-    this.personService.addPerson(this.person)
+    this.personService.addPerson(this.person,this.authen.getAuthenticated())
         .then(() => {
           this.alert.notify("แก้ไขข้มูลสำเร็จแล้ว","info");
           this.onClearForm()

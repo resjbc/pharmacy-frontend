@@ -7,6 +7,7 @@ import { AlertService } from 'src/app/shareds/services/alert.service';
 import { ReceiptService } from '../../services/receipt.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
+import { AuthenService } from 'src/app/services/authen.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class SearchReceiptsDateComponent implements OnInit, IReceiptDate {
   constructor(
     private alert: AlertService,
     private receiptService: ReceiptService,
-    private router: Router
+    private router: Router,
+    private authen: AuthenService
   ) { }
 
   ngOnInit() {
@@ -71,7 +73,8 @@ export class SearchReceiptsDateComponent implements OnInit, IReceiptDate {
       {
         myDateStart: this.myDateStart,
         myDateEnd: this.myDateEnd
-      }
+      },
+      this.authen.getAuthenticated()
     ).then(receipts => {
       if (receipts.length <= 0) {
         //this.dataSource = null;

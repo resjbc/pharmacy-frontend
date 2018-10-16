@@ -8,6 +8,7 @@ import { IPrintReceipt, IMemberReceipt } from '../create-order/create-order.inte
 import { IListItem } from '../create-order/add-item/add-item.interface';
 import THBText from 'thai-baht-text';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { AuthenService } from 'src/app/services/authen.service';
 
 
 
@@ -30,6 +31,7 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
   place_address?: string;
   date_created: Date;
   id_reference: number;
+  _id_reference: number
   id_receipt_cash?: number;
   id_receipt_cash_number?: number;
 
@@ -48,6 +50,7 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
     private receiptService: ReceiptService,
     private alert: AlertService,
     private modalService: BsModalService,
+    private authen: AuthenService
   ) {
   }
 
@@ -71,10 +74,11 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
 
   serchRecipt(id_reference: any) {
     this.receiptService
-      .findReceipt(id_reference)
+      .findReceipt(id_reference,this.authen.getAuthenticated())
       .then(receipt => {
         this.receiptDetails = receipt.receiptDetails;
         this.id_reference = receipt.id_reference;
+        this._id_reference = receipt.id_reference;
         this.date_created = receipt.date_created;
         this.place_address = receipt.place_address;
         this.place = receipt.place;
@@ -85,7 +89,7 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
         this.id_receipt_cash = receipt.id_receipt_cash;
         this.id_receipt_cash_number = receipt.id_receipt_cash_number
 
-        if(receipt.person === null) this.alert.notify("ใบสั่งซื้อนี้ไม่สมบรูณ์เพราะไม่มีข้อมูลผู้ประกอบการ")
+        if (receipt.person === null) this.alert.notify("ใบสั่งซื้อนี้ไม่สมบรูณ์เพราะไม่มีข้อมูลผู้ประกอบการ")
       })
       .catch(err => this.alert.notify(err.Message));
   }
@@ -104,7 +108,7 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
     return parseInt(year) + 543;
   }
 
-  BathText(){
+  BathText() {
     return THBText(this.totalPriceText);
   }
 

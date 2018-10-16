@@ -7,39 +7,39 @@ export class ActTypeListService {
 
   constructor(private http: HttpService) { }
 
-  removeAct(id_act) {
+  removeAct(id_act,accessToken: string) {
     return this.http
-    .requestDelete(`act_type_list/act/${id_act}`)
+    .requestDelete(`act_type_list/act/${id_act}`,accessToken)
     .toPromise() as Promise<any>;
   }
 
-  addAct(act){
+  addAct(act,accessToken: string){
     return this.http
-    .requestPost(`act_type_list/act`,act)
+    .requestPost(`act_type_list/act`,act,accessToken)
     .toPromise() as Promise<IActItem>;
   }
 
-  removeType(id_type) {
+  removeType(id_type,accessToken: string) {
     return this.http
-    .requestDelete(`act_type_list/type_in_act/${id_type}`)
+    .requestDelete(`act_type_list/type_in_act/${id_type}`,accessToken)
     .toPromise() as Promise<any>;
   }
 
-  addType(type){
+  addType(type,accessToken: string){
     return this.http
-    .requestPost(`act_type_list/type_in_act/type`,type)
+    .requestPost(`act_type_list/type_in_act/type`,type,accessToken)
     .toPromise() as Promise<ITypeItem>;
   }
 
-  removeList(id_list) {
+  removeList(id_list,accessToken: string) {
     return this.http
-    .requestDelete(`act_type_list/list_in_type/${id_list}`)
+    .requestDelete(`act_type_list/list_in_type/${id_list}`,accessToken)
     .toPromise() as Promise<any>;
   }
 
-  addList(list){
+  addList(list,accessToken: string){
     return this.http
-    .requestPost(`act_type_list/list_in_type/list`,list)
+    .requestPost(`act_type_list/list_in_type/list`,list,accessToken)
     .toPromise() as Promise<IListItem>;
   }
 }

@@ -6,6 +6,7 @@ import { AuthURL } from '../../authentication.url';
 import { AlertService } from 'src/app/shareds/services/alert.service';
 import { Router } from '@angular/router';
 import { ReceiptService } from '../../services/receipt.service';
+import { AuthenService } from 'src/app/services/authen.service';
 
 @Component({
   selector: 'app-search-receipts-person',
@@ -30,7 +31,8 @@ export class SearchReceiptsPersonComponent implements OnInit {
   constructor(
     private alert: AlertService,
     private router: Router,
-    private receiptService: ReceiptService
+    private receiptService: ReceiptService,
+    private authen: AuthenService
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class SearchReceiptsPersonComponent implements OnInit {
       
     }
    
-    this.receiptService.findReceiptPerson(pid).then(receipts => {
+    this.receiptService.findReceiptPerson(pid,this.authen.getAuthenticated()).then(receipts => {
       if (receipts.length <= 0) {
         //this.dataSource = null;
         return this.alert.notify("ไม่พบข้อมูล");

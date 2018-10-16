@@ -12,6 +12,10 @@ import { CreateListfeeComponent } from './components/create-listfee/create-listf
 import { SearchReceiptsDateComponent } from './components/search-receipts-date/search-receipts-date.component';
 import { SearchReceiptsPersonComponent } from './components/search-receipts-person/search-receipts-person.component';
 import { AddCashReferenceComponent } from './components/search-receipts/add-cash-reference/add-cash-reference.component';
+import { SearchReceiptsCashComponent } from './components/search-receipts-cash/search-receipts-cash.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AddMemberComponent } from './components/add-member/add-member.component';
+import { ChangePasswordComponent } from './components/profile/change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -30,6 +34,10 @@ import { AddCashReferenceComponent } from './components/search-receipts/add-cash
     SearchReceiptsDateComponent,
     SearchReceiptsPersonComponent,
     AddCashReferenceComponent,
+    SearchReceiptsCashComponent,
+    ProfileComponent,
+    AddMemberComponent,
+    ChangePasswordComponent,
     
   ],
   /*providers: [

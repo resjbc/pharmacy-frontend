@@ -15,7 +15,9 @@ export class HttpService {
   //ส่งข้อมูลแบบ Get method
   requestGet(url: string, accessToken?: string) {
     return this.http
-      .get(`${this.address}${url}`)
+      .get(`${this.address}${url}`,{
+        headers: this.appendHeaders(accessToken)
+      })
       .pipe(catchError(err => this.handleError(err)));
   }
 

@@ -8,6 +8,7 @@ import { IActItem } from '../create-order/add-item/add-item.interface';
 import { ICreateActComponent } from './create-act.interface';
 import { AddlistService } from '../../services/addlist.service';
 import { ActTypeListService } from '../../services/act-type-list.service';
+import { AuthenService } from 'src/app/services/authen.service';
 
 @Component({
   selector: 'app-create-act',
@@ -38,6 +39,7 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
     private act_type_list: ActTypeListService,
     private alert: AlertService,
     private build: FormBuilder,
+    private authen: AuthenService
   ) {
 
   }
@@ -57,7 +59,7 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
   }
 
   loadActs() {
-    this.actService.getActs().then(acts => {
+    this.actService.getActs(this.authen.getAuthenticated()).then(acts => {
       this.dataSource = new MatTableDataSource(acts);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -85,7 +87,7 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
     this.alert.confirm(`ต้องการลบ พรบ ${act.description} ใช่หรือไม่`)
       .then(status => {
         if (status)
-          this.act_type_list.removeAct(act.id_act)
+          this.act_type_list.removeAct(act.id_act,this.authen.getAuthenticated())
             .then(() => {
               this.loadActs();
               this.onClearForm();
@@ -96,7 +98,7 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
   onAddAct() {
     if (this.form.invalid ) return this.alert.someting_wrong();
     this.act = this.form.value;
-    this.act_type_list.addAct(this.act)
+    this.act_type_list.addAct(this.act,this.authen.getAuthenticated())
       .then(() => {
         this.alert.notify("เพิ่ม พรบ สำเร็จแล้ว", "info");
         this.onClearForm()
@@ -109,7 +111,7 @@ export class CreateActComponent implements OnInit, ICreateActComponent {
   onUpdateAct() {
     if (this.form.invalid) return this.alert.someting_wrong();
     this.act = this.form.value;
-    this.act_type_list.addAct(this.act)
+    this.act_type_list.addAct(this.act,this.authen.getAuthenticated())
       .then(() => {
         this.alert.notify("แก้ไขข้มูลสำเร็จแล้ว", "info");
         this.onClearForm()

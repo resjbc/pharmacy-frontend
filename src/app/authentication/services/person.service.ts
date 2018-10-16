@@ -10,27 +10,27 @@ export class PersonService {
 
   constructor(private http: HttpService) { }
 
-  getPerson(pid) {
+  getPerson(pid,accessToken: string) {
     return this.http
-               .requestGet(`person/${pid}`)
+               .requestGet(`person/${pid}`,accessToken)
                .toPromise() as Promise<IPerson>;
   }
 
-  getPersons() {
+  getPersons(accessToken: string) {
     return this.http
-               .requestGet(`person/`)
+               .requestGet(`person/`,accessToken)
                .toPromise() as Promise<IPerson[]>;
   }
 
-  addPerson(person) {
+  addPerson(person,accessToken: string) {
     return this.http
-               .requestPost(`person/add`,person)
+               .requestPost(`person/add`,person,accessToken)
                .toPromise() as Promise<IPerson>;
   }
 
-  removePerson(person) {
+  removePerson(person,accessToken: string) {
     return this.http
-               .requestDelete(`person/${person}`)
+               .requestDelete(`person/${person}`,accessToken)
                .toPromise() as Promise<any>;
   }
 }

@@ -8,9 +8,10 @@ import { AppURL } from '../../../app.url';
 import { AuthURL } from '../../authentication.url';
 import { PersonService } from '../../services/person.service';
 import { IPerson } from '../create-person/person.interface';
-import { IRoleAccount } from '../../../shareds/services/account.service';
 import { ReceiptService } from '../../services/receipt.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenService } from 'src/app/services/authen.service';
+import { AccountService } from 'src/app/shareds/services/account.service';
 
 @Component({
   selector: 'app-create-order',
@@ -38,7 +39,9 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
     private alert: AlertService,
     private personService: PersonService,
     private receiptService: ReceiptService,
-    private router: Router
+    private router: Router,
+    private authen: AuthenService,
+    private account: AccountService
   ) {
     this.initialCreateFormData();
 
@@ -55,7 +58,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
       id_person: this.i_person.id_person,
       date_created: !this.id_receipt ? new Date() : this.receipt.date_created,
       date_updated: new Date(),
-      id_member_create: 1,
+      id_member_create: this.account.UserLogin.id_person,
       place: this.form.controls.placeName.value,
       place_address: this.form.controls.placeAddress.value,
       receiptDetails: this.listItems
@@ -67,7 +70,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
 
     //console.log(this.receipt);  
 
-    this.receiptService.createReceipt(this.receipt).then(result => {
+    this.receiptService.createReceipt(this.receipt,this.authen.getAuthenticated()).then(result => {
 
       if (result) {
         this.receipt = result;
@@ -129,7 +132,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
           }
           //console.log(this.listItems[index].id_receipt_detail);
           this.receiptService
-            .deleteReceiptDetail(this.listItems[index].id_receipt_detail)
+            .deleteReceiptDetail(this.listItems[index].id_receipt_detail,this.authen.getAuthenticated())
             .then(() => {
               this.listItems.splice(index, 1);
             })
@@ -155,7 +158,7 @@ export class CreateOrderComponent implements ICreateOrderComponent, ICreateOrder
     }
 
     this.personService
-      .getPerson(pid)
+      .getPerson(pid,this.authen.getAuthenticated())
       .then(person => {
         this.i_person = person;
         this.form.setValue({

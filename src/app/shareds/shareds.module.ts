@@ -7,7 +7,6 @@ import { AuthSidebarComponent } from './components/auth-sidebar/auth-sidebar.com
 import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertService } from './services/alert.service';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import { MatAutocompleteModule, 
   MatFormFieldModule, 
   MatInputModule, 
@@ -16,9 +15,8 @@ import { MatAutocompleteModule,
   MatSortModule, 
   MatDatepickerModule, 
   MAT_DATE_LOCALE , 
-  MatNativeDateModule,
-   DateAdapter, 
-   MAT_DATE_FORMATS } from '@angular/material';
+  MatNativeDateModule,} from '@angular/material';
+import { ValidatorsService } from './services/validators.service';
 
 
 
@@ -63,6 +61,7 @@ import { MatAutocompleteModule,
   ],
   providers: [
     AlertService,
+    ValidatorsService,
     {provide: MAT_DATE_LOCALE, useValue: 'th-TH'},
     // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // `MatMomentDateModule` in your applications root module. We provide it at the component level

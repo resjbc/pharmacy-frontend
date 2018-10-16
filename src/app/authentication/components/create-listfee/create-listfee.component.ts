@@ -10,6 +10,7 @@ import { ActTypeListService } from '../../services/act-type-list.service';
 import { AlertService } from '../../../shareds/services/alert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ICreateListComponent } from './create-listfee.interface';
+import { AuthenService } from 'src/app/services/authen.service';
 
 @Component({
   selector: 'app-create-listfee',
@@ -44,6 +45,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
     private act_type_list: ActTypeListService,
     private alert: AlertService,
     private build: FormBuilder,
+    private authen: AuthenService
   ) {
 
   }
@@ -69,7 +71,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
 
   loadActs() {
     this.listService
-      .getActs()
+      .getActs(this.authen.getAuthenticated())
       .then(acts =>
         this.acts = acts
       )
@@ -95,7 +97,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
   }
 
   loadTypes(type) {
-    this.listService.getTypes(type).then(types => {
+    this.listService.getTypes(type,this.authen.getAuthenticated()).then(types => {
       this.types = types;
       this.form.get('id_type').enable();
     }).catch(err => {
@@ -127,7 +129,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
 
   loadLists(list) {
 
-    this.listService.getLists(list).then(lists => {
+    this.listService.getLists(list,this.authen.getAuthenticated()).then(lists => {
       this.dataSource = new MatTableDataSource(lists);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -156,7 +158,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
     this.alert.confirm(`ต้องการลบรายการนี้ใช่หรือไม่`)
       .then(status => {
         if (status)
-          this.act_type_list.removeList(list.id_list)
+          this.act_type_list.removeList(list.id_list,this.authen.getAuthenticated())
             .then(() => {
               this.onClearForm();
               this.loadLists(this.id_type);
@@ -168,7 +170,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
   onAddUpdateType(save: boolean) {
     if (this.form.invalid) return this.alert.someting_wrong();
     this.list = this.form.value;
-    this.act_type_list.addList(this.list)
+    this.act_type_list.addList(this.list,this.authen.getAuthenticated())
       .then(() => {
         if (save) this.alert.notify("เพิ่มรายการสำเร็จแล้ว", "info");
         else this.alert.notify("แก้ไขข้มูลสำเร็จแล้ว", "info");

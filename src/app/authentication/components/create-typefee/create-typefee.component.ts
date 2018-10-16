@@ -10,6 +10,7 @@ import { AddlistService } from '../../services/addlist.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
 import { ActTypeListService } from '../../services/act-type-list.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { AuthenService } from 'src/app/services/authen.service';
 
 @Component({
   selector: 'app-create-typefee',
@@ -43,6 +44,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
     private act_type_list: ActTypeListService,
     private alert: AlertService,
     private build: FormBuilder,
+    private authen: AuthenService
   ) {
 
   }
@@ -65,7 +67,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
 
   loadActs() {
     this.typeService
-      .getActs()
+      .getActs(this.authen.getAuthenticated())
       .then(acts =>
         this.acts = acts
       )
@@ -74,7 +76,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
   }
 
   loadTypes(type) {
-    this.typeService.getTypes(type).then(type => {
+    this.typeService.getTypes(type,this.authen.getAuthenticated()).then(type => {
       this.dataSource = new MatTableDataSource(type);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -116,7 +118,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
     this.alert.confirm(`ต้องการลบประเภทค่าธรรมเนียม ${type.description} ใช่หรือไม่`)
       .then(status => {
         if (status)
-          this.act_type_list.removeType(type.id_type)
+          this.act_type_list.removeType(type.id_type,this.authen.getAuthenticated())
             .then(() => {
               this.onClearForm();
               this.loadTypes(this.id_type);
@@ -128,7 +130,7 @@ export class CreateTypefeeComponent implements OnInit, OnDestroy, ICreateTypeFee
   onAddUpdateType(save: boolean) {
     if (this.form.invalid) return this.alert.someting_wrong();
     this.type = this.form.value;
-    this.act_type_list.addType(this.type)
+    this.act_type_list.addType(this.type,this.authen.getAuthenticated())
       .then(() => {
         if (save) this.alert.notify("เพิ่ม ประเภทค่าธรรมเนียม สำเร็จแล้ว", "info");
         else this.alert.notify("แก้ไขข้มูลสำเร็จแล้ว", "info");

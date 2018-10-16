@@ -6,6 +6,7 @@ import { AlertService } from '../../../../shareds/services/alert.service';
 import { AddlistService } from '../../../services/addlist.service';
 import { Observable, Subscription } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { AuthenService } from 'src/app/services/authen.service';
 
 
 
@@ -36,7 +37,8 @@ export class AddItemComponent implements OnInit,OnDestroy, IAddItemComponent {
   constructor(
     private builder: FormBuilder,
     private alert: AlertService,
-    private addlist: AddlistService
+    private addlist: AddlistService,
+    private authen: AuthenService
   ) {
     this.initailCreateFormData();
   }
@@ -78,7 +80,7 @@ export class AddItemComponent implements OnInit,OnDestroy, IAddItemComponent {
 
   getActs() {
     this.addlist
-      .getActs()
+      .getActs(this.authen.getAuthenticated())
       .then(acts =>
         this.acts = acts
       )
@@ -118,7 +120,7 @@ export class AddItemComponent implements OnInit,OnDestroy, IAddItemComponent {
 
   getTypes(id_act: number) {
     this.addlist
-      .getTypes(id_act)
+      .getTypes(id_act,this.authen.getAuthenticated())
       .then(types => this.types = types)
       .catch(err => {
         this.alert.notify(err.Message)
@@ -131,7 +133,7 @@ export class AddItemComponent implements OnInit,OnDestroy, IAddItemComponent {
 
   getLists(id_type: number) {
     this.addlist
-      .getLists(id_type)
+      .getLists(id_type,this.authen.getAuthenticated())
       .then(lists => {
         this.lists = lists;
 
