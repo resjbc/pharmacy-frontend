@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     IRoleAccount.Admin,
     IRoleAccount.ผู้ประกอบการ,
     IRoleAccount.เจ้าหน้าที่การเงิน,
-    IRoleAccount.เจ้าหน้าที่คปส
+    IRoleAccount.เจ้าหน้าที่คบส
 
   ];
 

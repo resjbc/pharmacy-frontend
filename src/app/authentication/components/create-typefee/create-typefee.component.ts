@@ -4,13 +4,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ITypeItem, IActItem } from '../create-order/add-item/add-item.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatSort } from '@angular/material';
-import { AppURL } from 'src/app/app.url';
 import { AuthURL } from '../../authentication.url';
 import { AddlistService } from '../../services/addlist.service';
 import { AlertService } from 'src/app/shareds/services/alert.service';
 import { ActTypeListService } from '../../services/act-type-list.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthenService } from 'src/app/services/authen.service';
+import { AppURL } from 'src/app/app.url';
 
 @Component({
   selector: 'app-create-typefee',

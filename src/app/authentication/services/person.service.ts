@@ -18,6 +18,12 @@ export class PersonService {
 
   getPersons(accessToken: string) {
     return this.http
+               .requestGet(`person/employee/`,accessToken)
+               .toPromise() as Promise<IPerson[]>;
+  }
+
+  getPersons_forAdmin(accessToken: string) {
+    return this.http
                .requestGet(`person/`,accessToken)
                .toPromise() as Promise<IPerson[]>;
   }

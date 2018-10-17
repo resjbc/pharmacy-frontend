@@ -22,7 +22,7 @@ const RouterList: Routes = [
         path: AuthURL.CreateOrder, 
         component: CreateOrderComponent ,
         canActivate: [UserRoleGuard] ,
-        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คปส ]}
+        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คบส ]}
     },
     { path: AuthURL.Profile, component: ProfileComponent },
     { 
@@ -35,25 +35,25 @@ const RouterList: Routes = [
         path: AuthURL.CreatePerson, 
         component: CreatePersonComponent ,
         canActivate: [UserRoleGuard],
-        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คปส ]}
+        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คบส ]}
     },
     { 
         path: AuthURL.CreateAct, 
         component: CreateActComponent ,
         canActivate: [UserRoleGuard],
-        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คปส ]}
+        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คบส ]}
     },
     { 
         path: AuthURL.CreateTypeFee, 
         component: CreateTypefeeComponent ,
         canActivate: [UserRoleGuard],
-        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คปส ]}
+        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คบส ]}
     },
     { 
         path: AuthURL.CreateListFee, 
         component: CreateListfeeComponent ,
         canActivate: [UserRoleGuard],
-        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คปส ]}
+        data: { roles: [IRoleAccount.Admin , IRoleAccount.เจ้าหน้าที่คบส ]}
     },
     { path: AuthURL.SearchReceipts, 
         children: [

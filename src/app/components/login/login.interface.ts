@@ -28,6 +28,6 @@ export interface IAccount {
 export enum IRoleAccount {
     ผู้ประกอบการ = 1,
     เจ้าหน้าที่การเงิน,
-    เจ้าหน้าที่คปส,
+    เจ้าหน้าที่คบส,
     Admin
 }

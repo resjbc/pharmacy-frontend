@@ -35,7 +35,7 @@ export class AddMemberComponent implements OnInit,ICreatePersonComponent {
     IRoleAccount.Admin,
     IRoleAccount.ผู้ประกอบการ,
     IRoleAccount.เจ้าหน้าที่การเงิน,
-    IRoleAccount.เจ้าหน้าที่คปส
+    IRoleAccount.เจ้าหน้าที่คบส
 
   ];
 
@@ -72,7 +72,7 @@ export class AddMemberComponent implements OnInit,ICreatePersonComponent {
   }
 
   loadPersons() {
-    this.personService.getPersons(this.authen.getAuthenticated()).then(person => {
+    this.personService.getPersons_forAdmin(this.authen.getAuthenticated()).then(person => {
       person = person.map( person_ => {
         person_.role_string = IRoleAccount[person_.role].toString();
         return person_;
@@ -112,7 +112,6 @@ export class AddMemberComponent implements OnInit,ICreatePersonComponent {
   onAddPerson() {
     if (this.form.invalid) return this.alert.someting_wrong();
     this.person = this.form.value;
-    this.person.role = 1;
     this.personService.addPerson(this.person,this.authen.getAuthenticated())
         .then(() => {
           this.alert.notify("เพิ่มผู้ประกอบการสำเร็จแล้ว","info");
