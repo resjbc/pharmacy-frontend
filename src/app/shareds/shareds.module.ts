@@ -17,6 +17,7 @@ import { MatAutocompleteModule,
   MAT_DATE_LOCALE , 
   MatNativeDateModule,} from '@angular/material';
 import { ValidatorsService } from './services/validators.service';
+import { CustomHashLocationStrategyService } from './services/custom-hash-location-strategy.service';
 
 
 
@@ -62,6 +63,7 @@ import { ValidatorsService } from './services/validators.service';
   providers: [
     AlertService,
     ValidatorsService,
+    CustomHashLocationStrategyService,
     {provide: MAT_DATE_LOCALE, useValue: 'th-TH'},
     // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // `MatMomentDateModule` in your applications root module. We provide it at the component level

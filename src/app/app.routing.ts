@@ -13,4 +13,4 @@ const RouterList: Routes = [
     }
 ];
 
-export const AppRouting = RouterModule.forRoot(RouterList)
+export const AppRouting = RouterModule.forRoot(RouterList/*, { useHash: true }*/)
