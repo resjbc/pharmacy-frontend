@@ -10,7 +10,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  private address: string = 'http://192.168.1.19:3000/';
+  private address: string = 'http://203.157.237.77:3000/';
 
   //ส่งข้อมูลแบบ Get method
   requestGet(url: string, accessToken?: string) {
