@@ -64,7 +64,7 @@ export class CreateListfeeComponent implements OnInit, OnDestroy, ICreateListCom
       id_act: ["", Validators.required],
       id_list: [null],
       id_type: [{ value: '', disabled: true }, Validators.required],
-      description: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('^[ก-๏\sa-zA-Z.0-9]+$')]],
+      description: [{ value: '', disabled: true }, [Validators.required]],
       price: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('^[0-9]+$')]]
     });
   }

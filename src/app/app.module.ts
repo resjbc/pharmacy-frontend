@@ -24,10 +24,10 @@ import { CustomHashLocationStrategyService } from './shareds/services/custom-has
 
   ],
   //providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy}],
-  providers: [
+  /*providers: [
     { provide: APP_BASE_HREF, useValue: '/kbs/' },
     { provide: LocationStrategy, useClass: CustomHashLocationStrategyService },
-  ], //ng build --prod --base-href=./
+  ], //ng build --prod --base-href=./*/
   bootstrap: [AppComponent]
 })
 export class AppModule { }
