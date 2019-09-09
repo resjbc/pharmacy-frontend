@@ -116,5 +116,8 @@ export class SearchReceiptsComponent implements OnInit, IPrintReceipt {
     this.modalRef = this.modalService.show(templete, { class: 'modal-lg' });
   }
 
+  onPrint(){
+    window.print();
+}
 
 }

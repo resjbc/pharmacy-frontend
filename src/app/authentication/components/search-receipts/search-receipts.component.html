@@ -223,7 +223,10 @@
             </div>
           </div>
           <div class="row d-print-none mt-2">
-            <div class="col-12 text-center"><a class="btn btn-danger form-control" href="javascript:window.print();" target="_blank"><i class="fa fa-print"></i> พิมพ์</a>
+              <div class="col-12 text-center"> <button type="button"  class="btn btn-danger form-control" (click)= "onPrint()" target="_blank"><i class="fa fa-print"></i> พิมพ์</button>
+            <!--
+<div class="col-12 text-center"><a class="btn btn-danger form-control" (click)="onPrint()" target="_blank"><i class="fa fa-print"></i> พิมพ์</a>
+            -->
             </div>
           </div>
         </section>
