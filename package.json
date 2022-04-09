@@ -25,7 +25,7 @@
     "@angular/router": "^6.1.10",
     "core-js": "^2.5.4",
     "dateformat": "^3.0.3",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "ngx-bootstrap": "^3.0.1",
     "rxjs": "^6.3.3",
     "thai-baht-text": "^1.0.7",
